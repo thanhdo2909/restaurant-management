@@ -4,14 +4,11 @@
  */
 package DAO;
 
-import Model.User;
-import java.util.ArrayList;
-
 /**
  *
  * @author ACER
  */
-public interface IDAOUser {
-    ArrayList<User> getAll();
-    boolean InserUser (String name , String email);
+public interface IDAOOrder {
+     boolean addOrder (String accountId , String shipperId , String totalAmount ,String status );
+     boolean addOrderOff (String accountId  , String totalAmount ,String status );
 }

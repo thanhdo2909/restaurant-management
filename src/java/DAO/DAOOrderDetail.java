@@ -16,7 +16,7 @@ import java.util.List;
 /**
  *
  * @author ACER
- */public class DAOOrderDetail extends IDAOOrderDetail {
+ */public class DAOOrderDetail implements IDAOOrderDetail {
 
     private static final String orderQuery = 
         "SELECT OD.OrderDetailID, O.OrderID, F.DefaultFoodName AS FoodName, " +
@@ -26,9 +26,10 @@ import java.util.List;
         "JOIN Food F ON OD.FoodID = F.FoodID " +
         "WHERE O.AccountID = ? " +
         "ORDER BY O.OrderDate DESC";
-
+    private static final String addOrder="INSERT INTO OrderDetails (OrderID, FoodID, Quantity, Price) VALUES (?, ?, ?, ?)";
  
-    public List<OrderDetail> getCartByUserId(int userId) throws SQLException {
+    @Override
+    public List<OrderDetail> getCartByUserId(int userId)  {
         List<OrderDetail> orderDetails = new ArrayList<>();
 
         try (Connection con = DBConnection.getConnection();
@@ -53,5 +54,22 @@ import java.util.List;
         }
 
         return orderDetails;
+    }
+
+    @Override
+    public boolean order(String orderId, String foodId, String Quantity, String price) {
+          try (Connection conn = DBConnection.getConnection(); 
+                  PreparedStatement ps = conn.prepareStatement(addOrder)) {
+            ps.setString(1, orderId);
+            ps.setString(2, foodId);
+            ps.setString(3, Quantity);
+            ps.setString(4, price);
+            int rowsInserted = ps.executeUpdate();
+            return rowsInserted > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+
     }
 }

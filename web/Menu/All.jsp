@@ -199,6 +199,8 @@ nav {
           
           <!-- Quantity + Add to cart -->
          <form action="CartServlet" method="post">
+<!--    <input type="hidden" name="mess" value="${mess}">-->
+    <input type="hidden" name="roomId" value="${roomId}">
   <input type="hidden" name="foodId" value="${o.foodID}">
   <input type="hidden" name="foodName" value="${o.defaultFoodName}">
   <input type="hidden" name="image" value="${o.image}">
@@ -217,10 +219,8 @@ nav {
 
 </div>
 
-        </div><!-- Menu Container -->
-
+        </div>
       </div>
-
     </section>
     </body>
 </html>

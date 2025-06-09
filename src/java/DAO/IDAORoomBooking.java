@@ -13,5 +13,8 @@ import java.util.ArrayList;
  */
 public interface IDAORoomBooking {
      ArrayList<RoomBooking> getAll();
-     
+  int checkAvailableRoom(String startTime, String endTime);
+
+    boolean BookRoom(String accountId ,String roomId ,String startTime ,String endTime );
+    int RoomId (String id );
 }

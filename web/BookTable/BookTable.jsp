@@ -75,7 +75,7 @@
       <p>Book a Table</p>
     </div>
 
-      <form action="" method="">
+      <form action="${pageContext.request.contextPath}/RoomBookingServlet" method="post">
       <input type="text" name="name" class="form-control" placeholder="Your Name" required>
       <input type="email" name="email" class="form-control" placeholder="Your Email" required>
       <input type="text" name="phone" class="form-control" placeholder="Your Phone" required>

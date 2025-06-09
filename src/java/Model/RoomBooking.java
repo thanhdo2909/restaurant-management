@@ -12,15 +12,15 @@ import java.util.Date;
 
 public class RoomBooking {
     private int bookingID;
-    private int userID;
+    private int accountId;
     private int roomID;
     private Date startTime;
     private Date endTime;
 
     // Constructor
-    public RoomBooking(int bookingID, int userID, int roomID, Date startTime, Date endTime) {
+    public RoomBooking(int bookingID, int accountId, int roomID, Date startTime, Date endTime) {
         this.bookingID = bookingID;
-        this.userID = userID;
+        this.accountId = accountId;
         this.roomID = roomID;
         this.startTime = startTime;
         this.endTime = endTime;
@@ -35,13 +35,15 @@ public class RoomBooking {
         this.bookingID = bookingID;
     }
 
-    public int getUserID() {
-        return userID;
+    public int getAccountId() {
+        return accountId;
     }
 
-    public void setUserID(int userID) {
-        this.userID = userID;
+    public void setAccountId(int accountId) {
+        this.accountId = accountId;
     }
+
+  
 
     public int getRoomID() {
         return roomID;
@@ -71,7 +73,7 @@ public class RoomBooking {
     public String toString() {
         return "RoomBooking{" +
                 "bookingID=" + bookingID +
-                ", userID=" + userID +
+              
                 ", roomID=" + roomID +
                 ", startTime=" + startTime +
                 ", endTime=" + endTime +

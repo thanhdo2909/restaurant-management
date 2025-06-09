@@ -61,7 +61,7 @@
 
     <div class="mt-4">
         <a href="${pageContext.request.contextPath}/MenuServlet" class="btn btn-secondary">⬅️ Tiếp tục đặt món</a>
-        <a href="CheckoutServlet" class="btn btn-success">✅ Thanh toán</a>
+        <a href="${pageContext.request.contextPath}/SubmitOrderServlet" class="btn btn-success">✅ Thanh toán</a>
     </div>
 </div>
 </body>

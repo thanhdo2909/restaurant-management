@@ -203,7 +203,7 @@
                     </nav>
                                     <button class="btn btn-success btn-sm" onclick="addToCart('${o.defaultFoodName}')">🛒</button>
 
-                    <a class="btn-book-a-table d-none d-xl-block" href="#book-a-table">Book a Table</a>
+                    <a class="btn-book-a-table d-none d-xl-block" href="${pageContext.request.contextPath}/BookTable/BookTable.jsp">Book a Table</a>
                     <c:if test="${sessionScope.account == null}" >
                         <div> <a class="nav-link" href="${pageContext.request.contextPath}/home/Login.jsp" title="View Product" >Login</a></div>
                     </c:if>
