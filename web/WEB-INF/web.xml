@@ -1,0 +1,21 @@
+<web-app xmlns="http://xmlns.jcp.org/xml/ns/javaee"
+         version="3.1"
+         metadata-complete="false">
+    <display-name>Restaurant Management</display-name>
+
+    <welcome-file-list>
+        <welcome-file>home/Home.jsp</welcome-file>
+    </welcome-file-list>
+
+    <!-- Example servlet mapping -->
+    <servlet>
+        <servlet-name>FavoriteServlet</servlet-name>
+        <servlet-class>controller.FavoriteServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>FavoriteServlet</servlet-name>
+        <url-pattern>/FavoriteServlet</url-pattern>
+    </servlet-mapping>
+
+</web-app>
