@@ -15,14 +15,14 @@ import java.util.ArrayList;
 public class DAOReviewService {
         private DAOReview daoReview;
          public DAOReviewService( ) {
-        this.daoReview = daoReview;
+        this.daoReview =new  DAOReview();
     }
-         public ArrayList<Review> getAll() {
-        return daoReview.getAll();
-    }
+         public ArrayList<Review> getAll (String id){
+             return daoReview.getAll(id);
+         }
       public static void main(String[] args) {
         DAOReviewService d = new DAOReviewService();
-        ArrayList<Review> a = d.getAll();
+        ArrayList<Review> a = d.getAll("1");
           for (Review Review : a) {
               System.out.println(Review);
           }

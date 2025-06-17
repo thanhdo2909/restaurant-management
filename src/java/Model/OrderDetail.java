@@ -9,26 +9,40 @@ package Model;
  * @author ACER
  */
 public class OrderDetail {
-    private int orderDetailID;
+   private int orderDetailID;
     private int orderID;
-    private String name ;
     private int foodID;
+    private String foodName; 
+    private String img;
     private int quantity;
     private double price;
+   public OrderDetail() {
+    }
 
-    public OrderDetail(int orderDetailID, int orderID, String name, int foodID, int quantity, double price) {
+    public OrderDetail(int orderDetailID, int orderID, int foodID, String foodName, String img, int quantity, double price) {
         this.orderDetailID = orderDetailID;
         this.orderID = orderID;
-        this.name = name;
         this.foodID = foodID;
+        this.foodName = foodName;
+        this.img = img;
         this.quantity = quantity;
         this.price = price;
     }
 
     @Override
     public String toString() {
-        return "OrderDetail{" + "orderDetailID=" + orderDetailID + ", orderID=" + orderID + ", name=" + name + ", foodID=" + foodID + ", quantity=" + quantity + ", price=" + price + '}';
+        return "OrderDetail{" + "orderDetailID=" + orderDetailID + ", orderID=" + orderID + ", foodID=" + foodID + ", foodName=" + foodName + ", img=" + img + ", quantity=" + quantity + ", price=" + price + '}';
     }
+
+    public String getImg() {
+        return img;
+    }
+
+    public void setImg(String img) {
+        this.img = img;
+    }
+   
+
 
     public int getOrderDetailID() {
         return orderDetailID;
@@ -46,20 +60,20 @@ public class OrderDetail {
         this.orderID = orderID;
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
     public int getFoodID() {
         return foodID;
     }
 
     public void setFoodID(int foodID) {
         this.foodID = foodID;
+    }
+
+    public String getFoodName() {
+        return foodName;
+    }
+
+    public void setFoodName(String foodName) {
+        this.foodName = foodName;
     }
 
     public int getQuantity() {
@@ -77,5 +91,5 @@ public class OrderDetail {
     public void setPrice(double price) {
         this.price = price;
     }
-
+    
 }

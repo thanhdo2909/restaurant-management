@@ -14,5 +14,6 @@ import java.util.ArrayList;
 public interface IDAOFood {
         ArrayList<Food> getAll();
          ArrayList<Food> getFoodByCategory( String id);
-    
+     ArrayList <Food> sreachFood(String keyword);
+     Food  foodDetail(String id);
 }

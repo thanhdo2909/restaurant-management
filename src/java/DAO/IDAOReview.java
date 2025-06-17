@@ -12,5 +12,5 @@ import java.util.ArrayList;
  * @author ACER
  */
 public interface IDAOReview {
-        ArrayList<Review> getAll();
+        ArrayList<Review> getAll(String id );
 }

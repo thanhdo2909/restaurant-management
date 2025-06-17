@@ -16,37 +16,38 @@ import java.util.List;
 /**
  *
  * @author ACER
- */public class DAOOrderDetail implements IDAOOrderDetail {
+ */
+public class DAOOrderDetail implements IDAOOrderDetail {
 
-    private static final String orderQuery = 
-        "SELECT OD.OrderDetailID, O.OrderID, F.DefaultFoodName AS FoodName, " +
-        "OD.Quantity, OD.Price, (OD.Quantity * OD.Price) AS TotalPrice, O.OrderDate " +
-        "FROM OrderDetails OD " +
-        "JOIN [Order] O ON OD.OrderID = O.OrderID " +
-        "JOIN Food F ON OD.FoodID = F.FoodID " +
-        "WHERE O.AccountID = ? " +
-        "ORDER BY O.OrderDate DESC";
-    private static final String addOrder="INSERT INTO OrderDetails (OrderID, FoodID, Quantity, Price) VALUES (?, ?, ?, ?)";
- 
+    private static final String orderQuery
+            = "SELECT OD.OrderDetailID, O.OrderID, F.FoodID, F.DefaultFoodName AS FoodName, "
+            + "F.Image, OD.Quantity, OD.Price, (OD.Quantity * OD.Price) AS TotalPrice, O.OrderDate "
+            + "FROM OrderDetails OD "
+            + "JOIN [Order] O ON OD.OrderID = O.OrderID "
+            + "JOIN Food F ON OD.FoodID = F.FoodID "
+            + "WHERE O.AccountID = ? "
+            + "ORDER BY O.OrderDate DESC";
+    private static final String addOrder = "INSERT INTO OrderDetails (OrderID, FoodID, Quantity, Price) VALUES (?, ?, ?, ?)";
+
     @Override
-    public List<OrderDetail> getCartByUserId(int userId)  {
+    public List<OrderDetail> getCartByUserId(int userId) {
         List<OrderDetail> orderDetails = new ArrayList<>();
 
-        try (Connection con = DBConnection.getConnection();
-             PreparedStatement ps = con.prepareStatement(orderQuery)) {
-             
-            ps.setInt(1, userId); 
+        try (Connection con = DBConnection.getConnection(); PreparedStatement ps = con.prepareStatement(orderQuery)) {
+
+            ps.setInt(1, userId);
             try (ResultSet rs = ps.executeQuery()) {
                 while (rs.next()) {
                     OrderDetail detail = new OrderDetail(
-                        rs.getInt(1),
-                        rs.getInt(2),
-                        rs.getString(4),
-                        rs.getInt(3),
-                        rs.getInt(5),
-                        rs.getDouble(6)
+                            rs.getInt(1), 
+                            rs.getInt(2), 
+                            rs.getInt(3), 
+                            rs.getString(4), 
+                            rs.getString(5),
+                            rs.getInt(6), 
+                            rs.getDouble(7)
                     );
-                    orderDetails.add(detail); 
+                    orderDetails.add(detail);
                 }
             }
         } catch (Exception e) {
@@ -58,8 +59,7 @@ import java.util.List;
 
     @Override
     public boolean order(String orderId, String foodId, String Quantity, String price) {
-          try (Connection conn = DBConnection.getConnection(); 
-                  PreparedStatement ps = conn.prepareStatement(addOrder)) {
+        try (Connection conn = DBConnection.getConnection(); PreparedStatement ps = conn.prepareStatement(addOrder)) {
             ps.setString(1, orderId);
             ps.setString(2, foodId);
             ps.setString(3, Quantity);

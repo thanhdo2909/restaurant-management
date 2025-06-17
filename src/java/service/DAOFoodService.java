@@ -26,11 +26,15 @@ public class DAOFoodService {
      public ArrayList<Food> getFoodByCategory(String id) {
         return daoFood.getFoodByCategory(id);
     }
+     public ArrayList <Food> searchFood (String keyword){
+         return daoFood.sreachFood(keyword);
+     }
+     public Food foodDetail(String id){
+         return daoFood.foodDetail(id);
+     }
     public static void main(String[] args) {
         DAOFoodService d = new DAOFoodService();
-        ArrayList<Food> food = d.getAll();
-        for (Food food1 : food) {
-            System.out.println(food1);
-        }
+     //   ArrayList<Food> food = d.searchFood("bia");
+        System.out.println(d.foodDetail("1"));
     }
 }

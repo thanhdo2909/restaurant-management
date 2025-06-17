@@ -46,10 +46,9 @@ public class LoginServlet extends HttpServlet {
         String pass=request.getParameter("pass");
         String password = MD5Hash(request.getParameter("pass"));
         String remember = request.getParameter("rememberMe");
-
         Account account = accountService.Login(username, password);
         if (account != null) {
-            HttpSession session = request.getSession();
+            HttpSession session = request.getSession(); 
             session.setAttribute("account", account);
             if ("on".equals(remember)) {
                 Cookie userCookie = new Cookie("name", username);
@@ -64,6 +63,7 @@ public class LoginServlet extends HttpServlet {
             }
             response.sendRedirect("home/Home.jsp");
         } else {
+          
             request.setAttribute("loginError", "Sai tên đăng nhập hoặc mật khẩu!");
             request.getRequestDispatcher("home/Login.jsp").forward(request, response);
         }

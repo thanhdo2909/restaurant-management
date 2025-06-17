@@ -174,8 +174,8 @@
                             <li><a href="${pageContext.request.contextPath}/home/About.jsp">About</a></li>
                             <li><a href="${pageContext.request.contextPath}/MenuServlet">Menu</a></li>
                             <li><a class="nav-link" href="${pageContext.request.contextPath}/Menu/Cart.jsp">🛒 Giỏ hàng</a></li>
-                            <li><a href="#events">Events</a></li>
-                            <li><a href="#chefs">Chefs</a></li>
+                            <li><a href="${pageContext.request.contextPath}/orderHistoryServlet">lịch sử mua </a></li>
+                            <li><a href="${pageContext.request.contextPath}/NotificationServlet">🔔</a></li>
                             <li><a href="${pageContext.request.contextPath}/home/profile.jsp">Profile</a></li>
                             <li class="dropdown"><a href="#"><span>Dropdown</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
                                     <%--  <ul>

@@ -18,34 +18,36 @@ import java.sql.SQLException;
  * @author ACER
  */
 public class DAOReview implements IDAOReview {
-        private static final String Querry_all = " select * from Reviews";
+        private static final String review = " select * from Reviews where FoodID= ?";
 
     @Override
-    public ArrayList<Review> getAll() {
+    public ArrayList<Review> getAll(String id ) {
         
-        List<Review> ReviewList = new ArrayList<>();
-
-        try (Connection con = DBConnection.getConnection(); PreparedStatement ps = con.prepareStatement(Querry_all); ResultSet rs = ps.executeQuery()) {
+        ArrayList<Review> reviewList = new ArrayList<>();
+    try (Connection con = DBConnection.getConnection();
+         PreparedStatement ps = con.prepareStatement(review)) {
+         
+        ps.setString(1, id);
+        try (ResultSet rs = ps.executeQuery()) {
             while (rs.next()) {
-                Review review = new Review(
-                        rs.getInt(1),
-                        rs.getInt(2),
-                        rs.getInt(3),
-                        rs.getString(4),
-                        rs.getInt(5),
-                        rs.getDate(6)
-                       
+                Review Review = new Review(
+                    rs.getInt(1),
+                    rs.getInt(2),
+                    rs.getInt(3),
+                    rs.getString(4),
+                    rs.getInt(5),
+                    rs.getDate(6)
                 );
-
-                ReviewList.add(review);
+                reviewList.add(Review);
             }
-        } catch (Exception e) {
-            e.printStackTrace();
         }
-        return (ArrayList<Review>) ReviewList;
+    } catch (Exception e) {
+        e.printStackTrace();
+    }
+    return reviewList;
+        
 
     }
-
-    }
+}
     
 
