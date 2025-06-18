@@ -9,19 +9,20 @@ package Model;
  * @author ACER
  */
 public class Account {
-    private int accountID;
-    private String fullName ;
-   private String Email ;
+
+    private int AccountID;
+    private String fullName;
+    private String Email;
     private String username;
     private String passwordHash;
     private int failedLoginCount;
     private String status;
     private String profileImage;
     private String role;
- private  int tierID;
+    private int tierID;
 
     public Account(int accountID, String fullName, String Email, String username, String passwordHash, int failedLoginCount, String status, String profileImage, String role, int tierID) {
-        this.accountID = accountID;
+        this.AccountID = accountID;
         this.fullName = fullName;
         this.Email = Email;
         this.username = username;
@@ -35,15 +36,15 @@ public class Account {
 
     @Override
     public String toString() {
-        return "Account{" + "accountID=" + accountID + ", fullName=" + fullName + ", Email=" + Email + ", username=" + username + ", passwordHash=" + passwordHash + ", failedLoginCount=" + failedLoginCount + ", status=" + status + ", profileImage=" + profileImage + ", role=" + role + ", tierID=" + tierID + '}';
+        return "Account{" + "accountID=" + AccountID + ", fullName=" + fullName + ", Email=" + Email + ", username=" + username + ", passwordHash=" + passwordHash + ", failedLoginCount=" + failedLoginCount + ", status=" + status + ", profileImage=" + profileImage + ", role=" + role + ", tierID=" + tierID + '}';
     }
 
     public int getAccountID() {
-        return accountID;
+        return AccountID;
     }
 
-    public void setAccountID(int accountID) {
-        this.accountID = accountID;
+    public void setAccountID(int AccountID) {
+        this.AccountID = AccountID;
     }
 
     public String getFullName() {
@@ -94,8 +95,6 @@ public class Account {
         this.status = status;
     }
 
- 
-
     public String getProfileImage() {
         return profileImage;
     }
@@ -119,5 +118,5 @@ public class Account {
     public void setTierID(int tierID) {
         this.tierID = tierID;
     }
- 
-}    
+
+}
