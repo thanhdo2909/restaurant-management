@@ -3,16 +3,18 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/admin/Documents/GitHub/restaurant-management/web/Menu/Cart.jsp</file>
-            <file>file:/C:/Users/admin/Documents/GitHub/restaurant-management/web/chatbot/chatbot.jsp</file>
-            <file>file:/C:/Users/admin/Documents/GitHub/restaurant-management/src/java/RoomBooking/RoomBookingServlet.java</file>
-            <file>file:/C:/Users/admin/Documents/GitHub/restaurant-management/src/java/DAO/DAOFavorite.java</file>
-            <file>file:/C:/Users/admin/Documents/GitHub/restaurant-management/web/Menu/All.jsp</file>
-            <file>file:/C:/Users/admin/Documents/GitHub/restaurant-management/src/java/controller/CartServlet.java</file>
-            <file>file:/C:/Users/admin/Documents/GitHub/restaurant-management/src/java/DAO/IDAOFavorite.java</file>
-            <file>file:/C:/Users/admin/Documents/GitHub/restaurant-management/src/java/DAO/IDAOAccount.java</file>
-            <file>file:/C:/Users/admin/Documents/GitHub/restaurant-management/src/java/Model/Favorite.java</file>
-            <file>file:/C:/Users/admin/Documents/GitHub/restaurant-management/src/java/DAO/DBConnection.java</file>
+            <file>file:/D:/Code/restaurant-management/src/java/DAO/DAOOrderDetail.java</file>
+            <file>file:/D:/Code/restaurant-management/web/home/Home.jsp</file>
+            <file>file:/D:/Code/restaurant-management/src/java/email/EmailUtil.java</file>
+            <file>file:/D:/Code/restaurant-management/src/java/controller/SubmitOrderServlet.java</file>
+            <file>file:/D:/Code/restaurant-management/web/Menu/Cart.jsp</file>
+            <file>file:/D:/Code/restaurant-management/web/Menu/foodDetail.jsp</file>
+            <file>file:/D:/Code/restaurant-management/web/WEB-INF/web.xml</file>
+            <file>file:/D:/Code/restaurant-management/src/java/controller/MenuServlet.java</file>
+            <file>file:/D:/Code/restaurant-management/web/Menu/All.jsp</file>
+            <file>file:/D:/Code/restaurant-management/src/java/LoginbyGoogle/LoginGoogleHandler.java</file>
+            <file>file:/D:/Code/restaurant-management/src/java/controller/CartServlet.java</file>
+            <file>file:/D:/Code/restaurant-management/.git/COMMIT_EDITMSG</file>
         </group>
     </open-files>
 </project-private>
