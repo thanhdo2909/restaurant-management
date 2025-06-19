@@ -5,16 +5,16 @@
         <group>
             <file>file:/D:/Code/restaurant-management/src/java/DAO/DAOOrderDetail.java</file>
             <file>file:/D:/Code/restaurant-management/web/home/Home.jsp</file>
+            <file>file:/D:/Code/restaurant-management/src/java/email/EmailUtil.java</file>
             <file>file:/D:/Code/restaurant-management/src/java/controller/SubmitOrderServlet.java</file>
             <file>file:/D:/Code/restaurant-management/web/Menu/Cart.jsp</file>
             <file>file:/D:/Code/restaurant-management/web/Menu/foodDetail.jsp</file>
-            <file>file:/D:/Code/restaurant-management/web/vnpay_return.jsp</file>
             <file>file:/D:/Code/restaurant-management/web/WEB-INF/web.xml</file>
             <file>file:/D:/Code/restaurant-management/src/java/controller/MenuServlet.java</file>
-            <file>file:/D:/Code/restaurant-management/src/java/com/vnpay/common/ajaxServlet.java</file>
             <file>file:/D:/Code/restaurant-management/web/Menu/All.jsp</file>
+            <file>file:/D:/Code/restaurant-management/src/java/LoginbyGoogle/LoginGoogleHandler.java</file>
             <file>file:/D:/Code/restaurant-management/src/java/controller/CartServlet.java</file>
-            <file>file:/D:/Code/restaurant-management/src/java/com/vnpay/common/Config.java</file>
+            <file>file:/D:/Code/restaurant-management/.git/COMMIT_EDITMSG</file>
         </group>
     </open-files>
 </project-private>

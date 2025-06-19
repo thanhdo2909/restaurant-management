@@ -13,4 +13,5 @@ import java.util.ArrayList;
  */
 public interface IDAOReview {
         ArrayList<Review> getAll(String id );
+        boolean insertReview   (String id, String AccountId,String Comment,String ratinng, String CreeeateedAt);
 }
