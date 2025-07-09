@@ -1,4 +1,4 @@
-/*
+    /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
@@ -132,10 +132,11 @@ public class CartServlet extends HttpServlet {
     throws ServletException, IOException {
 String id = request.getParameter("roomId");
    if(id != null){
-       orderForRoomBooking(request, response);
+      orderOnliine(request, response);
      
    }else {
-       orderOnliine(request, response);
+      
+          orderForRoomBooking(request, response);
    }
     }
     

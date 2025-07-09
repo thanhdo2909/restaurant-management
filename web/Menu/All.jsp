@@ -133,11 +133,14 @@
 
         <p class="text-muted mb-3">${o.defaultIngredients}</p>
 
-        <form action="CartServlet" method="post" class="mt-auto d-flex">
-          <input type="hidden" name="foodId" value="${o.foodID}" />
-          <input type="number" name="quantity" class="form-control me-2" style="width: 80px;" value="1" min="1" />
-          <button type="submit" class="btn btn-success">🛒</button>
-        </form>
+       <form action="CartServlet" method="post" class="mt-auto d-flex">
+  <input type="hidden" name="foodId" value="${o.foodID}" />
+  <input type="hidden" name="foodName" value="${o.defaultFoodName}" />
+  <input type="hidden" name="image" value="${o.image}" />
+  <input type="hidden" name="price" value="${o.price}" />
+  <input type="number" name="quantity" class="form-control me-2" style="width: 80px;" value="1" min="1" />
+  <button type="submit" class="btn btn-success">🛒</button>
+</form>
       </div>
     </div>
   </div>

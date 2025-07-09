@@ -21,4 +21,6 @@ public interface IDAOAccount {
        void changeAccount ( String id , String account );
        Account  checkAccount (String account);
        boolean checkEmail (String email);
+       boolean lockAccount ( String id);
+       boolean unlockAccount (String id);
 }

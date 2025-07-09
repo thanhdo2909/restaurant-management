@@ -82,9 +82,9 @@ public class RoomBookingServlet extends HttpServlet {
 
             String name = request.getParameter("name");
 String phone = request.getParameter("phone");
-String date = request.getParameter("date");        // "2025-06-04"
-String start = request.getParameter("startTime");  // "20:30"
-String end = request.getParameter("endTime");      // "22:00"
+String date = request.getParameter("date");       
+String start = request.getParameter("startTime"); 
+String end = request.getParameter("endTime");      
 
 // Kiểm tra và đảm bảo start và end luôn có định dạng HH:mm
 if (start.length() == 5) start += ":00"; // thêm giây nếu thiếu
@@ -119,7 +119,7 @@ String endStr   = date + " " + end;
                          // Thành công → chuyển sang chọn món
                       request.setAttribute("mess", "booking");
                        request.setAttribute("roomId",RoomId );
-                      request.getRequestDispatcher("home/All.jsp").forward(request, response);
+                      request.getRequestDispatcher("/MenuServlet?table=").forward(request, response);
                
             } else {
                 request.setAttribute("error", "Lỗi khi lưu thông tin đặt bàn.");
