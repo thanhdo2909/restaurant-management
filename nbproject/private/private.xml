@@ -3,9 +3,19 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
+            <file>file:/C:/Users/admin/Documents/GitHub/restaurant-management/src/java/controller/auth/VerifyOTPServlet.java</file>
             <file>file:/C:/Users/admin/Documents/GitHub/restaurant-management/src/java/email/EmailUtil.java</file>
+            <file>file:/C:/Users/admin/Documents/GitHub/restaurant-management/web/home/Home.jsp</file>
+            <file>file:/C:/Users/admin/Documents/GitHub/restaurant-management/web/home/Login.jsp</file>
+            <file>file:/C:/Users/admin/Documents/GitHub/restaurant-management/src/java/Order/orderHistoryServlet.java</file>
             <file>file:/C:/Users/admin/Documents/GitHub/restaurant-management/web/notification/notification.jsp</file>
             <file>file:/C:/Users/admin/Documents/GitHub/restaurant-management/src/java/LoginbyGoogle/LoginGoogleHandler.java</file>
+            <file>file:/C:/Users/admin/Documents/GitHub/restaurant-management/src/java/LoginbyGoogle/Constants.java</file>
+            <file>file:/C:/Users/admin/Documents/GitHub/restaurant-management/web/includes/OTP.jsp</file>
+            <file>file:/C:/Users/admin/Documents/GitHub/restaurant-management/src/java/chat/ChatGPTServlet.java</file>
+            <file>file:/C:/Users/admin/Documents/GitHub/restaurant-management/src/java/service/DAOAccountService.java</file>
+            <file>file:/C:/Users/admin/Documents/GitHub/restaurant-management/src/java/DAO/DAOAccount.java</file>
+            <file>file:/C:/Users/admin/Documents/GitHub/restaurant-management/src/java/DAO/DBConnection.java</file>
         </group>
     </open-files>
 </project-private>

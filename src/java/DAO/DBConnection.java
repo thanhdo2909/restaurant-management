@@ -12,7 +12,7 @@ import java.util.logging.Logger;
 public class DBConnection {
     private static final String URL = "jdbc:sqlserver://localhost:1433;databaseName=QLNH";
     private static final String USER = "sa";
-    private static final String PASSWORD = "123456";
+    private static final String PASSWORD = "0973620848Khanh*";
 
     public static Connection getConnection() {
         Connection conn = null;
