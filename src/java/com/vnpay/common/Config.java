@@ -21,7 +21,7 @@ import jakarta.servlet.http.HttpServletRequest;
 public class Config {
 
     public static String vnp_PayUrl = "https://sandbox.vnpayment.vn/paymentv2/vpcpay.html";
-    public static String vnp_ReturnUrl = "http://localhost:9999/quan_ly_nha_hang/vnpay_return.jsp";
+    public static String vnp_ReturnUrl = "http://localhost:9999/quan_ly_nha_hang/vnpay_jsp/vnpay_return.jsp";
     public static String vnp_TmnCode = "G2QM474K";
     public static String secretKey = "XC2WHFF8J673OWGU36P3X0PRHMB141VT";
     public static String vnp_ApiUrl = "https://sandbox.vnpayment.vn/merchant_webapi/api/transaction";
@@ -62,7 +62,7 @@ public class Config {
         return digest;
     }
 
-    // Util cho VNPay: tính hash dựa trên các trường truyền vào
+    //Util for VNPAY
     public static String hashAllFields(Map fields) {
         List fieldNames = new ArrayList(fields.keySet());
         Collections.sort(fieldNames);
@@ -82,9 +82,10 @@ public class Config {
         }
         return hmacSHA512(secretKey, sb.toString());
     }
-    
+
     public static String hmacSHA512(final String key, final String data) {
         try {
+
             if (key == null || data == null) {
                 throw new NullPointerException();
             }
@@ -99,11 +100,12 @@ public class Config {
                 sb.append(String.format("%02x", b & 0xff));
             }
             return sb.toString();
+
         } catch (Exception ex) {
             return "";
         }
     }
-    
+
     public static String getIpAddress(HttpServletRequest request) {
         String ipAdress;
         try {

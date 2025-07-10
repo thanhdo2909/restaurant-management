@@ -96,8 +96,9 @@ public class Account {
     }
 
     public String getProfileImage() {
-        return profileImage;
-    }
+    return (profileImage != null) ? profileImage : "default-avatar.png";
+}
+
 
     public void setProfileImage(String profileImage) {
         this.profileImage = profileImage;
