@@ -18,7 +18,7 @@ public class GroqServlet extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String userMessage = req.getParameter("message");
         System.out.println("User message: " + userMessage);
-        String apiKey = "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"; 
+        String apiKey = "ASK ME LATER"; 
         String requestBody = """
         {
             "model": "llama3-70b-8192",
