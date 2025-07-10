@@ -10,7 +10,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class DBConnection {
-    private static final String URL = "jdbc:sqlserver://localhost:1433;databaseName=QLNH";
+    private static final String URL = "jdbc:sqlserver://localhost:9999;databaseName=QLNH";
     private static final String USER = "sa";
     private static final String PASSWORD = "0973620848Khanh*";
 
