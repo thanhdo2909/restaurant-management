@@ -3,11 +3,26 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
+            <file>file:/D:/Code/restaurant-management/web/order/list.jsp</file>
+            <file>file:/D:/Code/restaurant-management/src/java/Model/Notification.java</file>
+            <file>file:/D:/Code/restaurant-management/src/java/DAO/DAOOrderDetail.java</file>
             <file>file:/D:/Code/restaurant-management/src/java/Model/Account.java</file>
+            <file>file:/D:/Code/restaurant-management/src/java/service/KitchenService.java</file>
+            <file>file:/D:/Code/restaurant-management/src/java/DAO/IDAOFood.java</file>
             <file>file:/D:/Code/restaurant-management/nbproject/build-impl.xml</file>
-            <file>file:/D:/Code/restaurant-management/web/WEB-INF/web.xml</file>
-            <file>file:/D:/Code/restaurant-management/web/home/profile.jsp</file>
+            <file>file:/D:/Code/restaurant-management/src/java/DAO/DAONotification.java</file>
+            <file>file:/D:/Code/restaurant-management/src/java/Model/Order.java</file>
+            <file>file:/D:/Code/restaurant-management/src/java/service/ShipperService.java</file>
+            <file>file:/D:/Code/restaurant-management/src/java/DAO/IDAOOrder.java</file>
             <file>file:/D:/Code/restaurant-management/web/META-INF/context.xml</file>
+            <file>file:/D:/Code/restaurant-management/src/java/DAO/DAOOrder.java</file>
+            <file>file:/D:/Code/restaurant-management/src/java/controller/kitchen/KitchenOrderServlet.java</file>
+            <file>file:/D:/Code/restaurant-management/web/order/formAction.jsp</file>
+            <file>file:/D:/Code/restaurant-management/web/WEB-INF/web.xml</file>
+            <file>file:/D:/Code/restaurant-management/src/java/controller/shipper/ShipperOrderServlet.java</file>
+            <file>file:/D:/Code/restaurant-management/web/order/detail.jsp</file>
+            <file>file:/D:/Code/restaurant-management/src/java/Model/OrderDetail.java</file>
+            <file>file:/D:/Code/restaurant-management/web/home/profile.jsp</file>
         </group>
     </open-files>
 </project-private>
