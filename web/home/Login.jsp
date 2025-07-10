@@ -34,10 +34,10 @@
         <form action="${pageContext.request.contextPath}/LoginServlet" method="post">
             <input type="hidden" name="action" value="login">
             <div class="mb-3">
-                <input type="text" name="name" class="form-control" value="${cookie.name != null ? cookie.name.value : ''}" placeholder="Enter your username" required>
+                <input type="text" name="username" class="form-control" value="${cookie.name != null ? cookie.name.value : ''}" placeholder="Enter your username" required>
             </div>
             <div class="mb-3">
-                <input type="password" name="pass" class="form-control" value="${cookie.pass != null ? cookie.pass.value : ''}" placeholder="Enter your password" required>
+                <input type="password" name="password" class="form-control" value="${cookie.pass != null ? cookie.pass.value : ''}" placeholder="Enter your password" required>
             </div>
             <div class="form-check mb-3">
                 <input type="checkbox" class="form-check-input" id="rememberMe" name="rememberMe">
@@ -45,12 +45,11 @@
             </div>
             <button type="submit" class="btn btn-primary w-100">Login</button>
         </form>
-           <a class="google-login-btn"
-           href="https://accounts.google.com/o/oauth2/auth?scope=profile&redirect_uri=http://localhost:9999/quan_ly_nha_hang/home/Home.jsp&response_type=code&client_id=699392886816-j6212kjvnv15d5njg55emslgb50ta4ub.apps.googleusercontent.com&approval_prompt=force">
+        <a class="google-login-btn" href="https://accounts.google.com/o/oauth2/auth?scope=profile&redirect_uri=http://localhost:9999/quan_ly_nha_hang/home/Home.jsp&response_type=code&client_id=699392886816-j6212kjvnv15d5njg55emslgb50ta4ub.apps.googleusercontent.com&approval_prompt=force">
             <img src="https://developers.google.com/identity/images/g-logo.png" alt="Google logo">
             Login with Google
         </a>
-             <p class="form-switch"> <a href="${pageContext.request.contextPath}/home/ForgetPass.jsp" onclick="toggleForm()">quên mật khẩu </a></p>
+        <p class="form-switch"><a href="${pageContext.request.contextPath}/home/ForgetPass.jsp" onclick="toggleForm()">Quên mật khẩu</a></p>
         <p class="form-switch">Don't have an account? <a href="#" onclick="toggleForm()">Sign Up</a></p>
     </div>
 

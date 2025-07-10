@@ -1,120 +1,130 @@
-
 package DAO;
 
 import Model.RoomBooking;
-import java.beans.Statement;
-import java.sql.Timestamp;
-import java.sql.Connection;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
-/**
- *
- * @author ACER
- */
-public class DAORoomBooking implements IDAORoomBooking {
-
-    private static final String Querry_all = "select * from RoomBookings";
-    private static final String checkroom = "SELECT TOP 1 RoomID FROM Rooms\n"
-            + "            WHERE RoomID NOT IN (\n"
-            + "                SELECT RoomID FROM RoomBookings\n"
-            + "                WHERE StartTime < ? AND EndTime > ?\n"
-            + "            )";
-private static final String bookRoom ="INSERT INTO RoomBookings (AccountID, RoomID, StartTime, EndTime)\n" +
-"VALUES (?, ?, ?, ?)";
-private static final String RoomId ="SELECT TOP 1 BookingID\n" +
-"FROM RoomBookings\n" +
-"WHERE AccountID = ?\n" +
-"ORDER BY StartTime DESC";
-    @Override
-    public ArrayList<RoomBooking> getAll() {
-        List<RoomBooking> AccountList = new ArrayList<>();
-
-        try (Connection con = DBConnection.getConnection(); PreparedStatement ps = con.prepareStatement(Querry_all); ResultSet rs = ps.executeQuery()) {
-            while (rs.next()) {
-                RoomBooking account = new RoomBooking(
-                        rs.getInt(1),
-                        rs.getInt(2),
-                        rs.getInt(3),
-                        rs.getDate(4),
-                        rs.getDate(5)
-                );
-
-                AccountList.add(account);
+public class DAORoomBooking {
+    public boolean isRoomBooked(int roomId, Timestamp startTime, Timestamp endTime) throws SQLException {
+        String sql = "SELECT COUNT(*) FROM RoomBookings WHERE RoomID = ? AND Status = 'Booked' " +
+                "AND ((StartTime < ? AND EndTime > ?) OR (StartTime < ? AND EndTime > ?) OR (StartTime >= ? AND EndTime <= ?))";
+        try (Connection conn = DBConnection.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setInt(1, roomId);
+            ps.setTimestamp(2, endTime);
+            ps.setTimestamp(3, startTime);
+            ps.setTimestamp(4, endTime);
+            ps.setTimestamp(5, startTime);
+            ps.setTimestamp(6, startTime);
+            ps.setTimestamp(7, endTime);
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    return rs.getInt(1) > 0;
+                }
             }
-        } catch (Exception e) {
-            e.printStackTrace();
         }
-        return (ArrayList<RoomBooking>) AccountList;
-    }
-
-    @Override
-    public int checkAvailableRoom(String startTime, String endTime) {
-         int roomId = -1;
-      
-    try (
-        Connection con = DBConnection.getConnection();
-        PreparedStatement ps = con.prepareStatement(checkroom)
-    ) {
-        ps.setString(1, endTime);  
-        ps.setString(2, startTime);
-
-        ResultSet rs = ps.executeQuery();
-        if (rs.next()) {
-            roomId = rs.getInt("RoomID");
-        }
-
-    } catch (Exception e) {
-        e.printStackTrace();
-    }
-
-    return roomId;
-        }
-
-    @Override
-    public boolean BookRoom(String accountId, String roomId, String startTime, String endTime) {
-         try (
-        Connection conn = DBConnection.getConnection();
-        PreparedStatement ps = conn.prepareStatement(bookRoom)
-    ) {
-        ps.setInt(1, Integer.parseInt(accountId));
-        ps.setInt(2, Integer.parseInt(roomId));
-        ps.setTimestamp(3, Timestamp.valueOf(startTime));
-        ps.setTimestamp(4, Timestamp.valueOf(endTime));
-
-        int rows = ps.executeUpdate();
-        return rows > 0;
-
-    } catch (Exception e) {
-        e.printStackTrace();
         return false;
     }
-    }
 
-    @Override
-    public int RoomId(String id) {
-         int bookingId = -1; 
-    try (
-        Connection con = DBConnection.getConnection();
-        PreparedStatement ps = con.prepareStatement(RoomId)
-    ) {
-        ps.setString(1, id);
-
-        ResultSet rs = ps.executeQuery();
-        if (rs.next()) {
-            bookingId = rs.getInt("BookingID");  
+    public boolean addRoomBooking(RoomBooking booking) throws SQLException {
+        String sql = "INSERT INTO RoomBookings (AccountID, RoomID, StartTime, EndTime, Status, People, Message, Phone) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+        try (Connection conn = DBConnection.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setInt(1, booking.getAccountID());
+            ps.setInt(2, booking.getRoomID());
+            ps.setTimestamp(3, booking.getStartTime());
+            ps.setTimestamp(4, booking.getEndTime());
+            ps.setString(5, booking.getStatus());
+            ps.setInt(6, booking.getPeople());
+            ps.setString(7, booking.getMessage());
+            ps.setString(8, booking.getPhone());
+            int affectedRows = ps.executeUpdate();
+            return affectedRows > 0;
         }
-
-    } catch (Exception e) {
-        e.printStackTrace();
     }
 
-    return bookingId;
+    public List<RoomBooking> getBookingsByRoom(int roomId) throws SQLException {
+        List<RoomBooking> list = new ArrayList<>();
+        String sql = "SELECT rb.*, a.FullName FROM RoomBookings rb LEFT JOIN Accounts a ON rb.AccountID = a.AccountID WHERE rb.RoomID = ?";
+        try (Connection conn = DBConnection.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setInt(1, roomId);
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    RoomBooking booking = new RoomBooking();
+                    booking.setBookingID(rs.getInt("BookingID"));
+                    booking.setAccountID(rs.getInt("AccountID"));
+                    booking.setRoomID(rs.getInt("RoomID"));
+                    booking.setStartTime(rs.getTimestamp("StartTime"));
+                    booking.setEndTime(rs.getTimestamp("EndTime"));
+                    booking.setStatus(rs.getString("Status"));
+                    booking.setPeople(rs.getInt("People"));
+                    booking.setMessage(rs.getString("Message"));
+                    booking.setPhone(rs.getString("Phone"));
+                    list.add(booking);
+                }
+            }
+        }
+        return list;
+    }
 
+    public List<RoomBooking> getBookingsByAccount(int accountId) throws SQLException {
+        List<RoomBooking> list = new ArrayList<>();
+        String sql = "SELECT rb.*, a.FullName FROM RoomBookings rb LEFT JOIN Accounts a ON rb.AccountID = a.AccountID WHERE rb.AccountID = ?";
+        try (Connection conn = DBConnection.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setInt(1, accountId);
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    RoomBooking booking = new RoomBooking();
+                    booking.setBookingID(rs.getInt("BookingID"));
+                    booking.setAccountID(rs.getInt("AccountID"));
+                    booking.setRoomID(rs.getInt("RoomID"));
+                    booking.setStartTime(rs.getTimestamp("StartTime"));
+                    booking.setEndTime(rs.getTimestamp("EndTime"));
+                    booking.setStatus(rs.getString("Status"));
+                    booking.setPeople(rs.getInt("People"));
+                    booking.setMessage(rs.getString("Message"));
+                    booking.setPhone(rs.getString("Phone"));
+                    list.add(booking);
+                }
+            }
+        }
+        return list;
+    }
+
+    public boolean cancelBooking(int bookingId) throws SQLException {
+        String sql = "UPDATE RoomBookings SET Status = 'Cancelled' WHERE BookingID = ?";
+        try (Connection conn = DBConnection.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setInt(1, bookingId);
+            int affected = ps.executeUpdate();
+            System.out.println("Cancel booking " + bookingId + ": " + (affected > 0 ? "Success" : "Failed"));
+            return affected > 0;
+        }
+    }
+
+    public List<RoomBooking> getAllBookings() throws SQLException {
+        List<RoomBooking> list = new ArrayList<>();
+        String sql = "SELECT rb.*, a.FullName FROM RoomBookings rb LEFT JOIN Accounts a ON rb.AccountID = a.AccountID";
+        try (Connection conn = DBConnection.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql);
+             ResultSet rs = ps.executeQuery()) {
+            while (rs.next()) {
+                RoomBooking booking = new RoomBooking();
+                booking.setBookingID(rs.getInt("BookingID"));
+                booking.setAccountID(rs.getInt("AccountID"));
+                booking.setRoomID(rs.getInt("RoomID"));
+                booking.setStartTime(rs.getTimestamp("StartTime"));
+                booking.setEndTime(rs.getTimestamp("EndTime"));
+                booking.setStatus(rs.getString("Status"));
+                booking.setPeople(rs.getInt("People"));
+                booking.setMessage(rs.getString("Message"));
+                booking.setPhone(rs.getString("Phone"));
+                list.add(booking);
+            }
+        }
+        return list;
     }
 }
