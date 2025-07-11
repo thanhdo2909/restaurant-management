@@ -12,35 +12,30 @@ public class DAORoom {
 
     // Lấy tất cả các bàn với trạng thái từ RoomBookings
     public List<Room> getAllRooms() throws SQLException {
-    List<Room> list = new ArrayList<>();
-    String sql = "WITH LatestBookings AS (" +
-                 "    SELECT RoomID, Status, ROW_NUMBER() OVER (PARTITION BY RoomID ORDER BY StartTime DESC) as rn " +
-                 "    FROM RoomBookings " +
-                 ") " +
-                 "SELECT r.*, COALESCE(lb.Status, 'Available') AS Status " +
-                 "FROM Rooms r " +
-                 "LEFT JOIN LatestBookings lb ON r.RoomID = lb.RoomID AND lb.rn = 1 " +
-                 "ORDER BY r.RoomID ASC";
-    try (Connection conn = DBConnection.getConnection();
-         PreparedStatement ps = conn.prepareStatement(sql);
-         ResultSet rs = ps.executeQuery()) {
-        while (rs.next()) {
-            Room room = new Room();
-            room.setRoomID(rs.getInt("RoomID"));
-            room.setRoomType(rs.getString("RoomType"));
-            room.setMaxCapacity(rs.getInt("MaxCapacity"));
-            room.setStatus(rs.getString("Status"));
-            room.setQrCodePath(rs.getString("QRCodePath"));
-            list.add(room);
-            LOGGER.info("Loaded RoomID: " + room.getRoomID() + ", Status: " + room.getStatus());
+        List<Room> list = new ArrayList<>();
+        String sql = "SELECT r.*, COALESCE(rb.Status, 'Available') AS Status " +
+                     "FROM Rooms r LEFT JOIN RoomBookings rb ON r.RoomID = rb.RoomID " +
+                     "ORDER BY r.RoomID ASC";
+        try (Connection conn = DBConnection.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql);
+             ResultSet rs = ps.executeQuery()) {
+            while (rs.next()) {
+                Room room = new Room();
+                room.setRoomID(rs.getInt("RoomID"));
+                room.setRoomType(rs.getString("RoomType"));
+                room.setMaxCapacity(rs.getInt("MaxCapacity"));
+                room.setStatus(rs.getString("Status"));
+                room.setQrCodePath(rs.getString("QRCodePath"));
+                list.add(room);
+                LOGGER.info("Loaded RoomID: " + room.getRoomID() + ", Status: " + room.getStatus());
+            }
+            LOGGER.info("Total rooms loaded: " + list.size());
+        } catch (SQLException e) {
+            LOGGER.log(Level.SEVERE, "Lỗi khi lấy danh sách Rooms: " + e.getMessage(), e); // Đảm bảo cú pháp
+            throw e;
         }
-        LOGGER.info("Total rooms loaded: " + list.size());
-    } catch (SQLException e) {
-        LOGGER.log(Level.SEVERE, "Lỗi khi lấy danh sách Rooms: " + e.getMessage(), e);
-        throw e;
+        return list;
     }
-    return list;
-}
 
     // Lấy các bàn còn trống và đủ sức chứa trong thời gian cụ thể
     public List<Room> getAvailableRooms(int people, Timestamp startTime, Timestamp endTime) throws SQLException {
