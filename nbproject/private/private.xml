@@ -5,33 +5,14 @@
         <group>
             <file>file:/C:/Users/ACER/Documents/restaurant-management/src/java/DAO/DAORoom.java</file>
             <file>file:/C:/Users/ACER/Documents/restaurant-management/src/java/RoomBooking/AdminViewTableServlet.java</file>
-            <file>file:/C:/Users/ACER/Documents/restaurant-management/src/java/Model/Account.java</file>
-            <file>file:/C:/Users/ACER/Documents/restaurant-management/web/home/Login.jsp</file>
-            <file>file:/C:/Users/ACER/Documents/restaurant-management/src/java/RoomBooking/GenerateQRCodeServlet.java</file>
-            <file>file:/C:/Users/ACER/Documents/restaurant-management/src/java/RoomBooking/ViewRoomsServlet.java</file>
-            <file>file:/C:/Users/ACER/Documents/restaurant-management/src/java/Model/Category.java</file>
             <file>file:/C:/Users/ACER/Documents/restaurant-management/src/java/Model/RoomBooking.java</file>
-            <file>file:/C:/Users/ACER/Documents/restaurant-management/src/java/controller/MenuServlet.java</file>
             <file>file:/C:/Users/ACER/Documents/restaurant-management/src/java/DAO/IDAORoom.java</file>
-            <file>file:/C:/Users/ACER/Documents/restaurant-management/src/java/RoomBooking/ScanQRServlet.java</file>
-            <file>file:/C:/Users/ACER/Documents/restaurant-management/web/BookTable/roomMap.jsp</file>
-            <file>file:/C:/Users/ACER/Documents/restaurant-management/web/home/Home.jsp</file>
-            <file>file:/C:/Users/ACER/Documents/restaurant-management/src/java/Model/CartItem.java</file>
-            <file>file:/C:/Users/ACER/Documents/restaurant-management/src/java/RoomBooking/TableDashboardServlet.java</file>
-            <file>file:/C:/Users/ACER/Documents/restaurant-management/src/java/service/DAORoomBookingService.java</file>
-            <file>file:/C:/Users/ACER/Documents/restaurant-management/web/BookTable/DisplayRoomId.jsp</file>
-            <file>file:/C:/Users/ACER/Documents/restaurant-management/src/java/DAO/DAORoomBooking.java</file>
-            <file>file:/C:/Users/ACER/Documents/restaurant-management/web/includes/Nappar.jsp</file>
-            <file>file:/C:/Users/ACER/Documents/restaurant-management/web/BookTable/BookTable.jsp</file>
-            <file>file:/C:/Users/ACER/Documents/restaurant-management/web/BookTable/BookingSucces.jsp</file>
+            <file>file:/C:/Users/ACER/Documents/restaurant-management/src/java/RoomBooking/QRPathServlet.java</file>
+            <file>file:/C:/Users/ACER/Documents/restaurant-management/src/java/RoomBooking/ViewRoomsServlet.java</file>
             <file>file:/C:/Users/ACER/Documents/restaurant-management/src/java/Model/Room.java</file>
-            <file>file:/C:/Users/ACER/Documents/restaurant-management/src/java/controller/auth/LogoutServlet.java</file>
-            <file>file:/C:/Users/ACER/Documents/restaurant-management/web/BookTable/ErrorPopup.jsp</file>
-            <file>file:/C:/Users/ACER/Documents/restaurant-management/src/java/DAO/IDAORoomBooking.java</file>
-            <file>file:/C:/Users/ACER/Documents/restaurant-management/web/BookTable/AdminViewTable.jsp</file>
             <file>file:/C:/Users/ACER/Documents/restaurant-management/web/Menu/All.jsp</file>
             <file>file:/C:/Users/ACER/Documents/restaurant-management/src/java/service/DAORoomService.java</file>
-            <file>file:/C:/Users/ACER/Documents/restaurant-management/src/java/controller/auth/LoginServlet.java</file>
+            <file>file:/C:/Users/ACER/Documents/restaurant-management/web/BookTable/roomMap.jsp</file>
             <file>file:/C:/Users/ACER/Documents/restaurant-management/src/java/RoomBooking/RoomBookingServlet.java</file>
         </group>
     </open-files>
