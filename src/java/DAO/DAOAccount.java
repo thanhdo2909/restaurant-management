@@ -104,8 +104,14 @@ public class DAOAccount implements IDAOAccount {
 
     @Override
     public boolean SignUp(String fullName, String email, String username, String pass, String role, String fileName) {
-        try (Connection conn = DBConnection.getConnection(); PreparedStatement ps = conn.prepareStatement(SignUp)) {
+        Connection conn = DBConnection.getConnection();
 
+        if (conn == null) {
+            System.out.println("❌ Kết nối DB thất bại: conn = null");
+            return false;
+        }
+
+        try (PreparedStatement ps = conn.prepareStatement(SignUp)) {
             ps.setString(1, fullName);
             ps.setString(2, email);
             ps.setNull(3, java.sql.Types.DATE);
@@ -121,8 +127,8 @@ public class DAOAccount implements IDAOAccount {
             e.printStackTrace();
             return false;
         }
-
     }
+
 
     @Override
     public void updateProfileImage(String accountId, String newProfileImage) {

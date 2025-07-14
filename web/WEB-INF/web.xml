@@ -41,5 +41,15 @@
         <servlet-name>vnpayRefund</servlet-name>
         <url-pattern>/vnpayrefund/*</url-pattern>
     </servlet-mapping>
+    
+    <servlet>
+        <servlet-name>PromotionController</servlet-name>
+        <servlet-class>controller.PromotionController</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>PromotionController</servlet-name>
+        <url-pattern>/promotion</url-pattern>
+    </servlet-mapping>
 
 </web-app>

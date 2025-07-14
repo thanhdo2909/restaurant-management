@@ -12,7 +12,7 @@ import java.util.logging.Logger;
 public class DBConnection {
     private static final String URL = "jdbc:sqlserver://localhost:1433;databaseName=QLNH";
     private static final String USER = "sa";
-    private static final String PASSWORD = "123456";
+    private static final String PASSWORD = "0973620848Khanh*";
 
     public static Connection getConnection() {
         Connection conn = null;
@@ -31,7 +31,7 @@ public class DBConnection {
             if (con != null) {
 //                            System.out.println(list.get(1).);
 
-                System.out.println("Connect to Sp25_DemoPRJ Success");
+                System.out.println("Connect to QLNH Success");
             }
         } catch (SQLException ex) {
             Logger.getLogger(DBConnection.class.getName()).log(Level.SEVERE, null, ex);
