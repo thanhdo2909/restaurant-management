@@ -156,6 +156,11 @@
                         <a href="${pageContext.request.contextPath}/MenuServlet" class="cta-btn">Our Menu</a>
                         <a href="#book-a-table" class="cta-btn">Book a Table</a>
                     </div>
+                    <div class="d-flex mt-3">
+                        <a href="${pageContext.request.contextPath}/promotion" class="cta-btn">
+                            🎟 Mã Giảm Giá
+                        </a>
+                    </div>
                 </div>
             </div>
         </div>
