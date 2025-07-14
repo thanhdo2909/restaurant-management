@@ -82,7 +82,7 @@ public class ManagerAccountServlet extends HttpServlet {
     if (!password.equals(confirmPassword)) {
         request.setAttribute("signupError", "Mật khẩu xác nhận không khớp!");
         request.setAttribute("showSignup", true);
-        request.getRequestDispatcher("home/Login.jsp").forward(request, response);
+         request.getRequestDispatcher("ManageAccount/createAccount.jsp").forward(request, response);
         return;
     }
 //    if ( accountService.checkEmail(email)){
@@ -95,7 +95,7 @@ public class ManagerAccountServlet extends HttpServlet {
     if (accountService.isUsernameExist(username)) {
         request.setAttribute("signupError", "Tên đăng nhập đã tồn tại!");
         request.setAttribute("showSignup", true);
-        request.getRequestDispatcher("home/Login.jsp").forward(request, response);
+          request.getRequestDispatcher("ManageAccount/createAccount.jsp").forward(request, response);
         return;
     }
          String fileName = null;
@@ -115,7 +115,7 @@ public class ManagerAccountServlet extends HttpServlet {
         } catch (Exception e) {
             request.setAttribute("signupError", "Lỗi upload ảnh: " + e.getMessage());
             request.setAttribute("showSignup", true);
-            request.getRequestDispatcher("home/Login.jsp").forward(request, response);
+            request.getRequestDispatcher("ManageAccount/createAccount.jsp").forward(request, response);
             return;
         }
        boolean  success = accountService.SignUp(fullName, email, username, password, role, fileName);

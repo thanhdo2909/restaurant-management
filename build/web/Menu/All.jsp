@@ -104,7 +104,7 @@
         </form>
     <ul class="menu-filters">
       <c:forEach items="${catelori}" var="o">
-        <!-- xài 'active' để CSS khớp -->
+      
         <li class="${tag == o.categoryID ? 'active' : ''}">
           <a class="text-decoration-none text-dark"
              href="MenuServlet?cid=${o.categoryID}">

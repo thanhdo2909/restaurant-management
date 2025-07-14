@@ -177,7 +177,7 @@
                             <li><a href="${pageContext.request.contextPath}/orderHistoryServlet">lịch sử mua </a></li>
                             <li><a href="${pageContext.request.contextPath}/NotificationServlet">🔔</a></li>
                             <li><a href="${pageContext.request.contextPath}/home/profile.jsp">Profile</a></li>
-                            <li class="dropdown"><a href="#"><span>Dropdown</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
+                            <li class="dropdown"><a href="${pageContext.request.contextPath}/ManagerAccountServlet"><span>Dropdown</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
                                     <%--  <ul>
                                       <li><a href="#">Dropdown 1</a></li>
                                      
