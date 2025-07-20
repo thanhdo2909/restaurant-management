@@ -1,16 +1,12 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package DAO;
 
 import Model.Room;
-import java.util.ArrayList;
+import java.sql.Timestamp;
+import java.util.List;
 
-/**
- *
- * @author ACER
- */
 public interface IDAORoom {
-    ArrayList<Room> getAll();
+    List<Room> getAllRooms() ;
+    Room getRoomById(int roomId) ;
+    List<Room> getAvailableRooms(int people, Timestamp startTime, Timestamp endTime);
+    void updateRoomStatus(int roomId, String status) ;
 }

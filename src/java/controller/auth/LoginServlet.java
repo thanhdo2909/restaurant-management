@@ -28,7 +28,10 @@ public class LoginServlet extends HttpServlet {
             StringBuilder sb = new StringBuilder();
             for (byte b : array) sb.append(String.format("%02x", b));
             return sb.toString();
-        } catch (Exception e) { return null; }
+        } catch (Exception e) { 
+            System.out.println("MD5 Hash error: " + e.getMessage());
+            return null; 
+        }
     }
 
     @Override
@@ -42,14 +45,21 @@ public class LoginServlet extends HttpServlet {
     }
 
     private void handleLogin(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String username = request.getParameter("name");
-        String pass=request.getParameter("pass");
-        String password = MD5Hash(request.getParameter("pass"));
+        String username = request.getParameter("username"); // Sửa từ "name" để khớp với Login.jsp
+        String pass = request.getParameter("password");    // Sửa từ "pass" để khớp với Login.jsp
+        String password = MD5Hash(pass);
         String remember = request.getParameter("rememberMe");
+
+        System.out.println("Attempting login for username: " + username + ", password hash: " + password); // Debug
         Account account = accountService.Login(username, password);
         if (account != null) {
-            HttpSession session = request.getSession(); 
+            HttpSession session = request.getSession();
+            session.setAttribute("accountId", account.getAccountID()); // Lưu ID tài khoản cho đặt bàn
+            session.setAttribute("fullName", account.getFullName());   // Lưu fullName cho BookTable.jsp
             session.setAttribute("account", account);
+
+            System.out.println("Login successful. accountId: " + account.getAccountID() + ", fullName: " + account.getFullName()); // Debug
+
             if ("on".equals(remember)) {
                 Cookie userCookie = new Cookie("name", username);
                 Cookie passCookie = new Cookie("pass", pass);
@@ -61,41 +71,41 @@ public class LoginServlet extends HttpServlet {
                 response.addCookie(new Cookie("name", ""));
                 response.addCookie(new Cookie("pass", ""));
             }
-            response.sendRedirect("home/Home.jsp");
+            response.sendRedirect(request.getContextPath() + "/home/Home.jsp"); // Chuyển về trang chính
         } else {
-          
+            System.out.println("Login failed for username: " + username + ". Possible cause: Check DAOAccountService or database."); // Debug chi tiết
             request.setAttribute("loginError", "Sai tên đăng nhập hoặc mật khẩu!");
-            request.getRequestDispatcher("home/Login.jsp").forward(request, response);
+            request.getRequestDispatcher("/home/Login.jsp").forward(request, response);
         }
     }
 
     private void handleRegister(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-      String fullName = request.getParameter("fullName");
-    String email = request.getParameter("email");
-    String username = request.getParameter("username");
-    String password = request.getParameter("password");
-    String confirmPassword = request.getParameter("confirmPassword");
- 
-    if (!password.equals(confirmPassword)) {
-        request.setAttribute("signupError", "Mật khẩu xác nhận không khớp!");
-        request.setAttribute("showSignup", true);
-        request.getRequestDispatcher("home/Login.jsp").forward(request, response);
-        return;
-    }
-    if ( accountService.checkEmail(email)){
-         request.setAttribute("signupError", " email da ton tais");
-        request.setAttribute("showSignup", true);
-        request.getRequestDispatcher("home/Login.jsp").forward(request, response);
-        return;
-    }
-     
-    if (accountService.isUsernameExist(username)) {
-        request.setAttribute("signupError", "Tên đăng nhập đã tồn tại!");
-        request.setAttribute("showSignup", true);
-        request.getRequestDispatcher("home/Login.jsp").forward(request, response);
-        return;
-    }
-         String fileName = null;
+        String fullName = request.getParameter("fullName");
+        String email = request.getParameter("email");
+        String username = request.getParameter("username");
+        String password = request.getParameter("password");
+        String confirmPassword = request.getParameter("confirmPassword");
+
+        if (!password.equals(confirmPassword)) {
+            request.setAttribute("signupError", "Mật khẩu xác nhận không khớp!");
+            request.setAttribute("showSignup", true);
+            request.getRequestDispatcher("/home/Login.jsp").forward(request, response);
+            return;
+        }
+        if (accountService.checkEmail(email)) {
+            request.setAttribute("signupError", "Email đã tồn tại!");
+            request.setAttribute("showSignup", true);
+            request.getRequestDispatcher("/home/Login.jsp").forward(request, response);
+            return;
+        }
+        if (accountService.isUsernameExist(username)) {
+            request.setAttribute("signupError", "Tên đăng nhập đã tồn tại!");
+            request.setAttribute("showSignup", true);
+            request.getRequestDispatcher("/home/Login.jsp").forward(request, response);
+            return;
+        }
+
+        String fileName = null;
         try {
             Part filePart = request.getPart("profileImage");
             if (filePart != null && filePart.getSize() > 0) {
@@ -107,38 +117,34 @@ public class LoginServlet extends HttpServlet {
                 try (InputStream input = filePart.getInputStream()) {
                     Files.copy(input, Paths.get(filePath), StandardCopyOption.REPLACE_EXISTING);
                 }
-               fileName = "img/profileImg/" + uniqueFileName;
+                fileName = "img/profileImg/" + uniqueFileName;
             }
         } catch (Exception e) {
             request.setAttribute("signupError", "Lỗi upload ảnh: " + e.getMessage());
             request.setAttribute("showSignup", true);
-            request.getRequestDispatcher("home/Login.jsp").forward(request, response);
+            request.getRequestDispatcher("/home/Login.jsp").forward(request, response);
             return;
         }
 
-     
+        // Tạo OTP 6 chữ số
+        Random random = new Random();
+        String otpCode = String.format("%06d", random.nextInt(999999));
 
-    // Tạo OTP 6 chữ số
-    Random random = new Random();
-    String otpCode = String.format("%06d", random.nextInt(999999));
+        // Gửi email OTP
+        EmailUtil emailUtil = new EmailUtil();
+        emailUtil.sendConfirmationEmail(email, otpCode);
 
-    // Gửi email OTP
-    EmailUtil emailUtil = new EmailUtil();
-    emailUtil.sendConfirmationEmail(email, otpCode);
+        // Lưu dữ liệu đăng ký + OTP + thời gian hết hạn vào session
+        HttpSession session = request.getSession();
+        session.setAttribute("signupFullName", fullName);
+        session.setAttribute("signupEmail", email);
+        session.setAttribute("signupUsername", username);
+        session.setAttribute("signupPassword", password);
+        session.setAttribute("signupfileName", fileName);
+        session.setAttribute("signupOtp", otpCode);
+        session.setAttribute("signupOtpExpiry", System.currentTimeMillis() + 10 * 60 * 1000); // 10 phút
 
-    // Lưu dữ liệu đăng ký + OTP + thời gian hết hạn vào session
-    HttpSession session = request.getSession();
-    session.setAttribute("signupFullName", fullName);
-    session.setAttribute("signupEmail", email);
-    session.setAttribute("signupUsername", username);
-    session.setAttribute("signupPassword", password);
-     session.setAttribute("signupfileName", fileName);
-    session.setAttribute("signupOtp", otpCode);
-    session.setAttribute("signupOtpExpiry", System.currentTimeMillis() + 10 * 60 * 1000); // 10 phút
-
-    // Chuyển tới trang xác minh OTP
-     //request.getRequestDispatcher("").forward(request, response);
-    session.setAttribute("purpose", "signup"); 
-    response.sendRedirect("./includes/OTP.jsp");
-}
+        session.setAttribute("purpose", "signup");
+        response.sendRedirect("./includes/OTP.jsp");
+    }
 }

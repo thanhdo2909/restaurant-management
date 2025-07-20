@@ -1,33 +1,43 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package service;
 
 import DAO.DAORoom;
 import Model.Room;
+import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.List;
 
-/**
- *
- * @author ACER
- */
 public class DAORoomService {
-    private DAORoom daoroom ;
+    private final DAORoom daoRoom;
 
     public DAORoomService() {
-        this.daoroom=daoroom;
+        this.daoRoom = new DAORoom();
     }
-       public ArrayList<Room> getAll() {
-        return daoroom.getAll();
+
+    public List<Room> getAllRooms() throws SQLException {
+        try {
+            return daoRoom.getAllRooms();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return new ArrayList<>();
+        }
     }
-      public static void main(String[] args) {
-        DAORoomService d = new DAORoomService();
-        ArrayList<Room> a = d.getAll();
-          for (Room room : a) {
-              System.out.println(room);
-          }
-}
-    
-    
+
+    public List<Room> getAvailableRooms(int people, Timestamp startTime, Timestamp endTime) throws SQLException {
+        try {
+            return daoRoom.getAvailableRooms(people, startTime, endTime);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return new ArrayList<>();
+        }
+    }
+
+    public Room getRoomById(int roomId) throws SQLException {
+        try {
+            return daoRoom.getRoomById(roomId);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
 }
