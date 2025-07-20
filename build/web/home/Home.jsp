@@ -90,6 +90,9 @@
                             <a href="${pageContext.request.contextPath}/MenuServlet" class="cta-btn">Our Menu</a>
                             <a href="${pageContext.request.contextPath}/ViewRoomsServlet" class="cta-btn">TABLE</a>
                             <a href="${pageContext.request.contextPath}/AdminViewTableServlet" class="cta-btn">View Table for Admin</a>
+                                <c:if test="${not empty sessionScope.accountId}">
+                            <a href="${pageContext.request.contextPath}/CustomerViewBookingServlet" class="cta-btn">Xem và Hủy Booking</a>
+                            </c:if>
                         </div>
                     </div>
                 </div>

@@ -5,22 +5,22 @@ import DAO.DAORoomBooking;
 import DAO.DBConnection;
 import Model.Room;
 import Model.RoomBooking;
+import email.BookingEmailUtil;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.List;
-import java.util.regex.Pattern;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.*;
-import java.util.stream.Collectors;
+import java.util.regex.Pattern;
 
 @WebServlet("/RoomBookingServlet")
 public class RoomBookingServlet extends HttpServlet {
     private String escapeHtml(String input) {
         if (input == null) return null;
-        return input.replace("&", "&")
+        return input.replace("&", "&amp;")
                    .replace("<", "&lt;")
                    .replace(">", "&gt;")
                    .replace("\"", "&quot;")
@@ -96,35 +96,31 @@ public class RoomBookingServlet extends HttpServlet {
             DAORoom daoRoom = new DAORoom();
             DAORoomBooking daoBooking = new DAORoomBooking();
 
-            // Kiểm tra bàn và sức chứa
+            // Kiểm tra bàn tồn tại
             Room room = daoRoom.getRoomById(roomId);
             if (room == null) {
                 throw new IllegalArgumentException("Bàn không tồn tại!");
             }
 
-            // Kiểm tra số người hiện tại đã đặt
-            List<RoomBooking> existingBookings = daoBooking.getBookingsByRoom(roomId);
-            int currentOccupancy = 0;
-            for (RoomBooking booking : existingBookings) {
-                if ("Booked".equals(booking.getStatus()) && 
-                    !((startTime.after(booking.getEndTime()) || endTime.before(booking.getStartTime())))) {
-                    currentOccupancy += booking.getPeople();
-                }
-            }
-            int totalPeople = currentOccupancy + people;
-
-            if (totalPeople > room.getMaxCapacity()) {
-                throw new IllegalArgumentException("Số người vượt quá sức chứa tối đa (" + room.getMaxCapacity() + ")! Số người hiện tại: " + currentOccupancy + ", Số người đặt thêm: " + people);
-            }
-
+            // Kiểm tra trùng thời gian
             if (daoBooking.isRoomBooked(roomId, startTime, endTime)) {
-                throw new IllegalArgumentException("Bàn đã được đặt trong thời gian này!");
+                throw new IllegalArgumentException("Bàn đã được đặt trong thời gian này bởi một khách hàng khác!");
+            }
+
+            // Kiểm tra khoảng cách thời gian 1 giờ
+            if (!daoBooking.isTimeSlotValid(roomId, startTime, endTime)) {
+                throw new IllegalArgumentException("Thời gian đặt bàn phải cách các đặt bàn khác ít nhất 1 giờ!");
+            }
+
+            // Kiểm tra sức chứa
+            if (people > room.getMaxCapacity()) {
+                throw new IllegalArgumentException("Số người vượt quá sức chứa tối đa (" + room.getMaxCapacity() + ")!");
             }
 
             // Kiểm tra số lượng booking của user (chỉ cho phép 1 booking)
             List<RoomBooking> userBookings = daoBooking.getBookingsByAccount(accountId);
             long activeBookings = userBookings.stream()
-                .filter(b -> "Booked".equals(b.getStatus()))
+                .filter(b -> "Booked".equals(b.getStatus()) || "CheckedIn".equals(b.getStatus()))
                 .count();
             if (activeBookings > 0) {
                 throw new IllegalArgumentException("Bạn chỉ được đặt 1 bàn tại một thời điểm! Vui lòng hủy bàn hiện tại trước khi đặt mới.");
@@ -146,7 +142,6 @@ public class RoomBookingServlet extends HttpServlet {
                 conn.setAutoCommit(false);
                 boolean success = daoBooking.addRoomBooking(booking);
                 if (success) {
-                    daoRoom.updateRoomStatus(roomId, "Booked");
                     conn.commit();
                 } else {
                     conn.rollback();
@@ -164,16 +159,21 @@ public class RoomBookingServlet extends HttpServlet {
             session.setAttribute("bookingFullName", fullName);
             session.setAttribute("bookingPhone", phone);
 
+            // Gửi email xác nhận
+            String recipientEmail = request.getParameter("email"); // Thay bằng email thực tế
+            BookingEmailUtil bookingEmailUtil = new BookingEmailUtil();
+            bookingEmailUtil.sendBookingConfirmationEmail(recipientEmail, fullName, roomId, date, start, end, people);
+
             response.sendRedirect(request.getContextPath() + "/BookTable/BookingSucces.jsp");
         } catch (IllegalArgumentException e) {
             session.setAttribute("error", e.getMessage());
-            response.sendRedirect(request.getContextPath() + "/BookTable/ErrorPopup.jsp"); // Chuyển đến trang popup lỗi
+            response.sendRedirect(request.getContextPath() + "/BookTable/ErrorPopup.jsp");
         } catch (SQLException e) {
             session.setAttribute("error", "Lỗi cơ sở dữ liệu: " + e.getMessage());
-            response.sendRedirect(request.getContextPath() + "/BookTable/ErrorPopup.jsp"); // Chuyển đến trang popup lỗi
+            response.sendRedirect(request.getContextPath() + "/BookTable/ErrorPopup.jsp");
         } catch (Exception e) {
             session.setAttribute("error", "Lỗi hệ thống: " + e.getMessage());
-            response.sendRedirect(request.getContextPath() + "/BookTable/ErrorPopup.jsp"); // Chuyển đến trang popup lỗi
+            response.sendRedirect(request.getContextPath() + "/BookTable/ErrorPopup.jsp");
         }
     }
 }

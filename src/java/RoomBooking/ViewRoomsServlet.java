@@ -58,4 +58,4 @@ public class ViewRoomsServlet extends HttpServlet {
         }
         request.getRequestDispatcher("/BookTable/roomMap.jsp").forward(request, response);
     }
-}
+}   

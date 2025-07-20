@@ -10,6 +10,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -21,6 +22,10 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.regex.Pattern;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 
 @WebServlet("/AdminViewTableServlet")
 public class AdminViewTableServlet extends HttpServlet {
@@ -86,63 +91,69 @@ public class AdminViewTableServlet extends HttpServlet {
         }
 
         String action = request.getParameter("action");
-        int id;
+        DAORoom daoRoom = new DAORoom();
+        DAORoomBooking daoBooking = new DAORoomBooking();
         try {
-            if (request.getParameter("roomId") != null) {
-                id = Integer.parseInt(request.getParameter("roomId"));
-                DAORoom dao = new DAORoom();
-                if ("cancel".equals(action)) {
-                    if (dao.updateBookingStatus(id, "Cancelled")) {
-                        dao.updateRoomStatus(id, "Available");
-                        request.setAttribute("success", "Hủy booking thành công! Bàn đã sẵn sàng.");
-                    } else {
-                        request.setAttribute("error", "Không thể hủy booking! Kiểm tra trạng thái hoặc dữ liệu.");
-                    }
-                } else if ("complete".equals(action)) {
-                    if (dao.updateBookingStatus(id, "Completed")) {
-                        dao.updateRoomStatus(id, "Available");
-                        request.setAttribute("success", "Đánh dấu hoàn tất thanh toán thành công! Bàn đã sẵn sàng.");
-                    } else {
-                        request.setAttribute("error", "Không thể đánh dấu hoàn tất! Kiểm tra trạng thái hoặc dữ liệu.");
-                    }
+            if ("checkin".equals(action)) {
+                // Lấy tham số từ form
+                String roomIdStr = request.getParameter("roomId");
+                String peopleStr = request.getParameter("people");
+                String name = request.getParameter("name");
+                Integer accountId = (Integer) session.getAttribute("accountId");
+
+                // Validate inputs
+                if (roomIdStr == null || peopleStr == null || name == null ||
+                    roomIdStr.isEmpty() || peopleStr.isEmpty() || name.isEmpty()) {
+                    throw new IllegalArgumentException("Vui lòng điền đầy đủ thông tin!");
                 }
-            } else if (request.getParameter("bookingId") != null) {
-                id = Integer.parseInt(request.getParameter("bookingId"));
-                DAORoomBooking daoBooking = new DAORoomBooking();
-                DAORoom daoRoom = new DAORoom();
-                if ("cancel".equals(action)) {
-                    String sql = "SELECT RoomID FROM RoomBookings WHERE BookingID = ?";
-                    int roomId = -1;
-                    try (Connection conn = DBConnection.getConnection();
-                         PreparedStatement ps = conn.prepareStatement(sql)) {
-                        ps.setInt(1, id);
-                        try (ResultSet rs = ps.executeQuery()) {
-                            if (rs.next()) {
-                                roomId = rs.getInt("RoomID");
-                            }
-                        }
-                    }
-                    if (roomId != -1) {
-                        if (daoBooking.cancelBooking(id)) {
-                            daoRoom.updateRoomStatus(roomId, "Available");
-                            request.setAttribute("success", "Kết thúc đặt bàn thành công! Bàn đã sẵn sàng.");
-                        } else {
-                            request.setAttribute("error", "Không thể kết thúc đặt bàn! Kiểm tra trạng thái hoặc dữ liệu.");
-                        }
-                    } else {
-                        request.setAttribute("error", "Không tìm thấy RoomID cho BookingID: " + id);
-                    }
+
+                int roomId, people;
+                try {
+                    roomId = Integer.parseInt(roomIdStr);
+                    people = Integer.parseInt(peopleStr);
+                } catch (NumberFormatException e) {
+                    throw new IllegalArgumentException("Mã bàn hoặc số lượng khách không hợp lệ!");
+                }
+
+                // Sử dụng thời gian thực
+                Calendar cal = Calendar.getInstance();
+                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                sdf.setTimeZone(java.util.TimeZone.getTimeZone("GMT+07:00"));
+                Timestamp startTime = new Timestamp(cal.getTimeInMillis());
+                cal.add(Calendar.HOUR_OF_DAY, 2); // Thêm 2 giờ làm endTime
+                Timestamp endTime = new Timestamp(cal.getTimeInMillis());
+
+                // Thực hiện check-in
+                boolean success = daoBooking.directBookRoom(roomId, accountId, startTime, endTime, people, name, "checkin", 0);
+                if (success) {
+                    request.setAttribute("success", "Check-in bàn thành công!");
+                } else {
+                    request.setAttribute("error", "Không thể check-in bàn!");
+                }
+            } else if ("checkout".equals(action)) {
+                int bookingId = Integer.parseInt(request.getParameter("bookingId"));
+                boolean success = daoBooking.directBookRoom(0, 0, null, null, 0, null, "checkout", bookingId);
+                if (success) {
+                    request.setAttribute("success", "Check-out bàn thành công!");
+                } else {
+                    request.setAttribute("error", "Không thể check-out bàn!");
+                }
+            } else if ("cancel".equals(action)) {
+                int bookingId = Integer.parseInt(request.getParameter("bookingId"));
+                if (daoBooking.cancelBooking(bookingId)) {
+                    request.setAttribute("success", "Hủy đặt bàn thành công!");
+                } else {
+                    request.setAttribute("error", "Không thể hủy đặt bàn! Kiểm tra trạng thái hoặc dữ liệu.");
                 }
             }
+        } catch (IllegalArgumentException e) {
+            request.setAttribute("error", e.getMessage());
         } catch (SQLException e) {
             LOGGER.log(Level.SEVERE, "Lỗi SQL khi xử lý hành động: " + e.getMessage(), e);
             request.setAttribute("error", "Lỗi hệ thống: " + e.getMessage());
-        } catch (NumberFormatException e) {
-            request.setAttribute("error", "ID không hợp lệ!");
         }
 
-        DAORoom daoRoom = new DAORoom();
-        DAORoomBooking daoBooking = new DAORoomBooking();
+        // Tải lại danh sách
         List<Room> rooms = null;
         List<RoomBooking> bookings = null;
         try {

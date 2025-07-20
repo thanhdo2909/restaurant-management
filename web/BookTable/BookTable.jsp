@@ -587,6 +587,18 @@
                             <input type="number" class="form-control" id="people" name="people" min="1" max="20" value="${param.people}" required>
                             <div id="people-error" class="error-message"></div>
                         </div>
+                                                           
+                        <div class="booking-item">
+                            <div class="booking-icon"><i class="fas fa-envelope"></i></div>
+                            <div class="booking-text">
+                                <div class="booking-label">Email</div>
+                                <div class="booking-value">
+                                    <input type="email" name="email" class="form-control" value="${sessionScope.email}" required>
+                                </div>
+                            </div>
+                        </div>
+                                
+                    </div>
 
                         <div class="form-group full-width">
                             <label for="message" class="form-label">
@@ -595,7 +607,6 @@
                             </label>
                             <textarea class="form-control" id="message" name="message" rows="4" maxlength="255">${param.message}</textarea>
                         </div>
-                    </div>
 
                     <div class="form-actions">
                         <button type="submit" class="btn-submit" id="submitBtn">
