@@ -66,4 +66,16 @@ public class Promotion {
     public void setIsActive(boolean isActive) {
         this.isActive = isActive;
     }
+
+    public float getPercent() {
+        return this.discountPercent;
+    }
+
+    public boolean isActive() {
+        return this.isActive;
+    }
+
+    public Date getExpire() {
+        return this.expirationDate;
+    }
 }

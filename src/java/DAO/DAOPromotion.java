@@ -46,6 +46,31 @@ public class DAOPromotion {
 
         return list;
     }
+    
+    public List<Promotion> getAllActive() {
+        List<Promotion> list = new ArrayList<>();
+        String sql = "SELECT * FROM Promotions";
+
+        try (Connection conn = getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql);
+             ResultSet rs = ps.executeQuery()) {
+
+            while (rs.next()) {
+                Promotion p = new Promotion(
+                    rs.getInt("PromoID"),
+                    rs.getString("PromoCode"),
+                    rs.getFloat("DiscountPercent"),
+                    rs.getDate("ExpirationDate"),
+                    rs.getBoolean("IsActive")
+                );
+                if(p.isActive()) list.add(p);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return list;
+    }
 
     public Promotion getById(int id) {
         String sql = "SELECT * FROM Promotions WHERE PromoID=?";

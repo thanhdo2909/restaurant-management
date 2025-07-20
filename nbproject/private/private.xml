@@ -3,19 +3,41 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/admin/Documents/GitHub/restaurant-management/src/java/controller/auth/VerifyOTPServlet.java</file>
-            <file>file:/C:/Users/admin/Documents/GitHub/restaurant-management/src/java/email/EmailUtil.java</file>
+            <file>file:/C:/Users/admin/Documents/GitHub/restaurant-management/web/META-INF/context.xml</file>
+            <file>file:/C:/Users/admin/Documents/GitHub/restaurant-management/nbproject/build-impl.xml</file>
+            <file>file:/C:/Users/admin/Documents/GitHub/restaurant-management/src/java/controller/NotificationServlet.java</file>
             <file>file:/C:/Users/admin/Documents/GitHub/restaurant-management/web/home/Home.jsp</file>
             <file>file:/C:/Users/admin/Documents/GitHub/restaurant-management/web/home/Login.jsp</file>
-            <file>file:/C:/Users/admin/Documents/GitHub/restaurant-management/src/java/Order/orderHistoryServlet.java</file>
+            <file>file:/C:/Users/admin/Documents/GitHub/restaurant-management/src/java/controller/MenuServlet.java</file>
+            <file>file:/C:/Users/admin/Documents/GitHub/restaurant-management/src/java/Model/OrderHistory.java</file>
+            <file>file:/C:/Users/admin/Documents/GitHub/restaurant-management/src/java/Model/OrderDetail.java</file>
+            <file>file:/C:/Users/admin/Documents/GitHub/restaurant-management/web/Menu/foodDetail.jsp</file>
+            <file>file:/C:/Users/admin/Documents/GitHub/restaurant-management/web/WEB-INF/web.xml</file>
+            <file>file:/C:/Users/admin/Documents/GitHub/restaurant-management/src/java/service/DAORoomBookingService.java</file>
             <file>file:/C:/Users/admin/Documents/GitHub/restaurant-management/web/notification/notification.jsp</file>
-            <file>file:/C:/Users/admin/Documents/GitHub/restaurant-management/src/java/LoginbyGoogle/LoginGoogleHandler.java</file>
             <file>file:/C:/Users/admin/Documents/GitHub/restaurant-management/src/java/LoginbyGoogle/Constants.java</file>
+            <file>file:/C:/Users/admin/Documents/GitHub/restaurant-management/src/java/DAO/IDAOOrderDetail.java</file>
+            <file>file:/C:/Users/admin/Documents/GitHub/restaurant-management/nbproject/genfiles.properties</file>
+            <file>file:/C:/Users/admin/Documents/GitHub/restaurant-management/build/web/WEB-INF/web.xml</file>
+            <file>file:/C:/Users/admin/Documents/GitHub/restaurant-management/src/java/DAO/DAOReview.java</file>
             <file>file:/C:/Users/admin/Documents/GitHub/restaurant-management/web/includes/OTP.jsp</file>
-            <file>file:/C:/Users/admin/Documents/GitHub/restaurant-management/src/java/chat/ChatGPTServlet.java</file>
-            <file>file:/C:/Users/admin/Documents/GitHub/restaurant-management/src/java/service/DAOAccountService.java</file>
-            <file>file:/C:/Users/admin/Documents/GitHub/restaurant-management/src/java/DAO/DAOAccount.java</file>
             <file>file:/C:/Users/admin/Documents/GitHub/restaurant-management/src/java/DAO/DBConnection.java</file>
+            <file>file:/C:/Users/admin/Documents/GitHub/restaurant-management/src/java/controller/auth/VerifyOTPServlet.java</file>
+            <file>file:/C:/Users/admin/Documents/GitHub/restaurant-management/src/java/email/EmailUtil.java</file>
+            <file>file:/C:/Users/admin/Documents/GitHub/restaurant-management/web/Menu/All.jsp</file>
+            <file>file:/C:/Users/admin/Documents/GitHub/restaurant-management/src/java/DAO/DAOOrder.java</file>
+            <file>file:/C:/Users/admin/Documents/GitHub/restaurant-management/src/java/Profile/ProfileServlet.java</file>
+            <file>file:/C:/Users/admin/Documents/GitHub/restaurant-management/src/java/Order/orderHistoryServlet.java</file>
+            <file>file:/C:/Users/admin/Documents/GitHub/restaurant-management/src/java/service/DAOReviewService.java</file>
+            <file>file:/C:/Users/admin/Documents/GitHub/restaurant-management/src/java/service/DAOOrderHistoryService.java</file>
+            <file>file:/C:/Users/admin/Documents/GitHub/restaurant-management/src/java/LoginbyGoogle/LoginGoogleHandler.java</file>
+            <file>file:/C:/Users/admin/Documents/GitHub/restaurant-management/nbproject/private/private.xml</file>
+            <file>file:/C:/Users/admin/Documents/GitHub/restaurant-management/nbproject/project.properties</file>
+            <file>file:/C:/Users/admin/Documents/GitHub/restaurant-management/web/Menu/Cart.jsp</file>
+            <file>file:/C:/Users/admin/Documents/GitHub/restaurant-management/src/java/Model/Promotion.java</file>
+            <file>file:/C:/Users/admin/Documents/GitHub/restaurant-management/src/java/service/DAOAccountService.java</file>
+            <file>file:/C:/Users/admin/Documents/GitHub/restaurant-management/web/BookTable/BookTable.jsp</file>
+            <file>file:/C:/Users/admin/Documents/GitHub/restaurant-management/src/java/DAO/DAOAccount.java</file>
         </group>
     </open-files>
 </project-private>

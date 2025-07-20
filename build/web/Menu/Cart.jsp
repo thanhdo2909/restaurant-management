@@ -1,5 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ page import="Model.CartItem" %>
 <%@ page import="java.util.List" %>
 
@@ -14,7 +15,6 @@
 <head>
   <title>Giỏ hàng</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-  <!-- Thêm jQuery để gọi AJAX -->
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 <body>
@@ -33,36 +33,54 @@
           </tr>
         </thead>
         <tbody>
+          <c:set var="total" value="0" />
           <c:forEach var="item" items="${cart}">
             <tr>
-              <td><img src="${pageContext.request.contextPath}/${item.image}"
-                       width="80" height="60" style="object-fit: cover;"/></td>
+              <td><img src="${pageContext.request.contextPath}/${item.image}" width="80" height="60" style="object-fit: cover;"/></td>
               <td>${item.foodName}</td>
               <td>${item.quantity}</td>
-              <td>${item.price} đ</td>
-              <td>${item.totalPrice} đ</td>
+              <td><fmt:formatNumber value="${item.price}" type="number"/> đ</td>
+              <td><fmt:formatNumber value="${item.totalPrice}" type="number"/> đ</td>
             </tr>
+            <c:set var="total" value="${total + item.totalPrice}" />
           </c:forEach>
         </tbody>
       </table>
 
-      <!-- Tính tổng -->
+      <!-- Chọn mã khuyến mãi -->
+      <form action="CartServlet" method="post" class="mb-4">
+        <label for="promotion">Chọn mã giảm giá:</label>
+        <select name="promotionId" id="promotion" class="form-select w-auto d-inline">
+          <option value="">-- Không áp dụng --</option>
+          <c:forEach var="p" items="${promoList}">
+            <option value="${p.promoID}"
+              <c:if test="${selectedPromo != null && selectedPromo.promoID == p.promoID}">selected</c:if>>
+              ${p.promoCode} - Giảm ${p.discountPercent}%
+            </option>
+          </c:forEach>
+        </select>
+        <button type="submit" class="btn btn-primary">Áp dụng</button>
+      </form>
+
+      <!-- Tổng cộng + Giảm giá -->
       <div class="text-end fw-bold fs-5">
-        Tổng cộng:
-        <c:set var="total" value="0" />
-        <c:forEach var="item" items="${cart}">
-          <c:set var="total" value="${total + item.totalPrice}" />
-        </c:forEach>
-        <span id="totalAmount">${total}</span> đ
+        Tổng cộng: <span><fmt:formatNumber value="${total}" type="number"/></span> đ
       </div>
+      <c:if test="${not empty selectedPromo}">
+        <div class="text-end text-success fw-semibold">
+          Giảm giá: -${selectedPromo.discountPercent}% (${selectedPromo.promoCode})
+        </div>
+        <div class="text-end fw-bold fs-5 text-danger">
+          Tổng sau giảm: 
+          <c:set var="discounted" value="${total - (total * selectedPromo.discountPercent / 100)}"/>
+          <span id="totalAmount"><fmt:formatNumber value="${discounted}" type="number"/></span> đ
+        </div>
+      </c:if>
     </c:otherwise>
   </c:choose>
 
   <div class="mt-4">
-    <a href="${pageContext.request.contextPath}/MenuServlet"
-       class="btn btn-secondary">⬅️ Tiếp tục đặt món</a>
-
-    <!-- Nút Thanh toán mới -->
+    <a href="${pageContext.request.contextPath}/MenuServlet" class="btn btn-secondary">⬅️ Tiếp tục đặt món</a>
     <button id="btnPay" class="btn btn-success">✅ Thanh toán</button>
   </div>
 </div>
@@ -71,21 +89,14 @@
 $(function(){
   $('#btnPay').click(function(e){
     e.preventDefault();
-
-    // Lấy tổng tiền từ span (kiểu string), parse sang số
-    var total = parseInt($('#totalAmount').text(), 10);
-
-    // Gọi AJAX lên ajaxServlet (mapping /vnpayajax)
+    var total = parseInt($('#totalAmount').text().replace(/\D/g, ''), 10);
     $.ajax({
       url: '${pageContext.request.contextPath}/vnpayajax',
       type: 'POST',
-      data: {
-        amount: total
-      },
+      data: { amount: total },
       dataType: 'json',
       success: function(resp) {
         if (resp.code === '00') {
-          // resp.data = paymentUrl do ajaxServlet trả về
           window.location.href = resp.data;
         } else {
           alert('Lỗi khi tạo đường dẫn thanh toán: ' + resp.message);
@@ -95,7 +106,6 @@ $(function(){
         alert('AJAX error: ' + error);
       }
     });
-
   });
 });
 </script>

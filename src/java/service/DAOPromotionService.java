@@ -45,4 +45,8 @@ public class DAOPromotionService implements IDAOPromotion {
     public void toggleStatus(int id, boolean active) {
         dao.toggleStatus(id, active);
     }
+
+    public List<Promotion> getAllActive() {
+        return dao.getAllActive();
+    }
 }
