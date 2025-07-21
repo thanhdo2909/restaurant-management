@@ -7,6 +7,7 @@ package controller;
 
 import Model.Account;
 import Model.Category;
+import Model.Favorite;
 import Model.Food;
 import Model.Review;
 import java.io.IOException;
@@ -17,8 +18,11 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import static java.nio.file.Files.list;
 import java.util.ArrayList;
+import java.util.List;
 import service.DAOCategori;
+import service.DAOFavoriteService;
 import service.DAOFoodService;
 import service.DAOReviewService;
 
@@ -31,42 +35,49 @@ public class MenuServlet extends HttpServlet {
    private DAOFoodService daoFood;
     private DAOCategori daoCategori;
      private DAOReviewService daoReview ;
-   
+     private DAOFavoriteService daoFavorite;
     @Override
     public void init() throws ServletException {
         daoFood = new DAOFoodService();
           daoCategori = new DAOCategori();
           daoReview = new DAOReviewService();
+          daoFavorite = new DAOFavoriteService();
     }
     public void ListFood (HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-        System.out.println("food");
-        ArrayList <Food> food = daoFood.getAll();
-        request.setAttribute("menu", food);
-     
-        String categoryID = request.getParameter("cid");
+       System.out.println("food");
+ArrayList<Food> food = daoFood.getAll();
+request.setAttribute("menu", food);
 
-    
-        ArrayList<Food> foodList;
+String categoryID = request.getParameter("cid");
 
-        if (categoryID != null && !categoryID.isEmpty()) {
-           
-            foodList = daoFood.getFoodByCategory(categoryID);
-            request.setAttribute("tag", categoryID); //
-        } else {
-          
-            foodList = daoFood.getAll();
-        }
+ArrayList<Food> foodList;
+if (categoryID != null && !categoryID.isEmpty()) {
+    foodList = daoFood.getFoodByCategory(categoryID);
+    request.setAttribute("tag", categoryID); // Gắn để highlight tab danh mục
+} else {
+    foodList = daoFood.getAll();
+}
 
-        ArrayList<Category> categoryList = daoCategori.getAll();
-   
-      
-        request.setAttribute("menu", foodList);
-        request.setAttribute("catelori", categoryList);
-       
+ArrayList<Category> categoryList = daoCategori.getAll();
 
-  
-        request.getRequestDispatcher("/Menu/All.jsp").forward(request, response);
+// ===== XỬ LÝ FAVORITE =====
+HttpSession session = request.getSession(false);
+List<Favorite> list = new ArrayList<>(); // Mặc định list rỗng
+
+if (session != null && session.getAttribute("account") != null) {
+    Account account = (Account) session.getAttribute("account");
+    String accountId = String.valueOf(account.getAccountID());
+    list = daoFavorite.getFavoriteFoodIds(accountId);
+}
+
+// LUÔN GÁN DỮ LIỆU DÙ CÓ FAVORITE HAY KHÔNG
+request.setAttribute("favoriteFoods", list); // hoặc đổi tên nếu cần
+request.setAttribute("menu", foodList);
+request.setAttribute("catelori", categoryList);
+
+// Gửi sang JSP
+request.getRequestDispatcher("/Menu/All.jsp").forward(request, response);
     }
     public void searchFood (HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {

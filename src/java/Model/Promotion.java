@@ -8,23 +8,25 @@ package Model;
  *
  * @author ACER
  */
-import java.util.Date;
+import java.sql.Date;
 
 public class Promotion {
     private int promoID;
     private String promoCode;
-    private double discountPercent;
+    private float discountPercent;
     private Date expirationDate;
+    private boolean isActive;
 
-    // Constructor
-    public Promotion(int promoID, String promoCode, double discountPercent, Date expirationDate) {
+    public Promotion() {}
+
+    public Promotion(int promoID, String promoCode, float discountPercent, Date expirationDate, boolean isActive) {
         this.promoID = promoID;
         this.promoCode = promoCode;
         this.discountPercent = discountPercent;
         this.expirationDate = expirationDate;
+        this.isActive = isActive;
     }
 
-    // Getters and setters
     public int getPromoID() {
         return promoID;
     }
@@ -41,11 +43,11 @@ public class Promotion {
         this.promoCode = promoCode;
     }
 
-    public double getDiscountPercent() {
+    public float getDiscountPercent() {
         return discountPercent;
     }
 
-    public void setDiscountPercent(double discountPercent) {
+    public void setDiscountPercent(float discountPercent) {
         this.discountPercent = discountPercent;
     }
 
@@ -57,13 +59,11 @@ public class Promotion {
         this.expirationDate = expirationDate;
     }
 
-    @Override
-    public String toString() {
-        return "Promotion{" +
-                "promoID=" + promoID +
-                ", promoCode='" + promoCode + '\'' +
-                ", discountPercent=" + discountPercent +
-                ", expirationDate=" + expirationDate +
-                '}';
+    public boolean isIsActive() {
+        return isActive;
+    }
+
+    public void setIsActive(boolean isActive) {
+        this.isActive = isActive;
     }
 }

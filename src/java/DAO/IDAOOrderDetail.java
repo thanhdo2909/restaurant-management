@@ -13,5 +13,6 @@ import java.util.List;
  */
 public interface IDAOOrderDetail {
          List<OrderDetail> getCartByUserId(int userId) ;
-        boolean order (String orderId  , String foodId , String Quantity,String price);
+        boolean order (String foodId, String Quantity, String price);
+           
 }

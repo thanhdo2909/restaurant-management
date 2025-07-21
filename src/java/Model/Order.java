@@ -17,6 +17,8 @@ public class Order {
     private double totalAmount;
     private String status;
     private Date createdAt;
+    
+    public Order() {}
 
     // Constructor
     public Order(int orderID, int userID, int shipperID, double totalAmount, String status, Date createdAt) {

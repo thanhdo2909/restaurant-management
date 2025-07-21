@@ -91,6 +91,8 @@
         <div class="d-flex mt-4" data-aos="fade-up" data-aos-delay="300">
           <a href="${pageContext.request.contextPath}/MenuServlet" class="cta-btn">Our Menu</a>
           <a href="#book-a-table" class="cta-btn">Book a Table</a>
+          <a href="${pageContext.request.contextPath}/RoomBookingServlet" class="cta-btn">Book Table</a>
+
         </div>
       </div>
     </div>

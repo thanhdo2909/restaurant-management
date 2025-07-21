@@ -1,1 +1,0 @@
-LoginbyGoogle.LoginGoogleHandler
