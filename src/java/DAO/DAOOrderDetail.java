@@ -28,7 +28,7 @@ public class DAOOrderDetail implements IDAOOrderDetail {
             + "WHERE O.AccountID = ? "
             + "ORDER BY O.OrderDate DESC";
     private static final String addOrder = "INSERT INTO OrderDetails (OrderID, FoodID, Quantity, Price) VALUES (?, ?, ?, ?)";
-
+   private static final String GET_MAX_ORDER_ID = "SELECT MAX(OrderID) FROM Orders";
     @Override
     public List<OrderDetail> getCartByUserId(int userId) {
         List<OrderDetail> orderDetails = new ArrayList<>();
@@ -58,18 +58,35 @@ public class DAOOrderDetail implements IDAOOrderDetail {
     }
 
     @Override
-    public boolean order(String orderId, String foodId, String Quantity, String price) {
-        try (Connection conn = DBConnection.getConnection(); PreparedStatement ps = conn.prepareStatement(addOrder)) {
-            ps.setString(1, orderId);
+    public boolean order(String foodId, String Quantity, String price) {
+        try (Connection conn = DBConnection.getConnection()) {
+        // 1. Lấy OrderID lớn nhất từ bảng Orders
+        int maxOrderId;
+        try (PreparedStatement psGetMaxId = conn.prepareStatement(GET_MAX_ORDER_ID);
+             ResultSet rs = psGetMaxId.executeQuery()) {
+            
+            if (rs.next()) {
+                maxOrderId = rs.getInt(1);
+            } else {
+                throw new SQLException("Could not retrieve max OrderID");
+            }
+        }
+        
+        // 2. Thêm vào bảng OrderDetails với OrderID vừa lấy được
+        try (PreparedStatement ps = conn.prepareStatement(addOrder)) {
+            ps.setInt(1, maxOrderId);
             ps.setString(2, foodId);
             ps.setString(3, Quantity);
             ps.setString(4, price);
+            
             int rowsInserted = ps.executeUpdate();
             return rowsInserted > 0;
-        } catch (SQLException e) {
-            e.printStackTrace();
-            return false;
         }
-
+        
+    } catch (SQLException e) {
+        e.printStackTrace();
+        return false;
     }
 }
+}
+

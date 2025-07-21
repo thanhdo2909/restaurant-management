@@ -7,6 +7,7 @@ package service;
 import DAO.DAOAccount;
 import Model.Account;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
@@ -19,7 +20,7 @@ public class DAOAccountService {
     
     this.daoAccount = new DAOAccount(); 
     }
-      ArrayList<Account> getAll() {
+    public   ArrayList<Account> getAll() {
         return daoAccount.getAll();
     }
    public  boolean SignUp (  String fullName,String email, String username, String pass, String role,String  fileName){
@@ -47,6 +48,13 @@ public class DAOAccountService {
    public boolean checkEmail (String email ){
        return daoAccount.checkEmail(email);
    }
+   public boolean lockAccount (String id){
+       return daoAccount.lockAccount(id);
+   }
+   public boolean unlockAccount (String id ){
+       return daoAccount.unlockAccount(id);
+   }
+ 
     public static String MD5Hash(String input) {
     try {
         java.security.MessageDigest md = java.security.MessageDigest.getInstance("MD5");

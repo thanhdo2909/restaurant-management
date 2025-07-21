@@ -16,4 +16,8 @@ public interface IDAOFood {
          ArrayList<Food> getFoodByCategory( String id);
      ArrayList <Food> sreachFood(String keyword);
      Food  foodDetail(String id);
+     boolean  AddFood (String name , String defaultIngredients , String price ,String description , String fileName ,String catID);
+     boolean EditFoodd(String foodID, String name, String ingredients, String price,
+                          String description, String image, String catID);
+     boolean deleFood (String id);
 }

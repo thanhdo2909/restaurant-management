@@ -1,3 +1,11 @@
+<<<<<<< HEAD
+    /*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
+ */
+
+=======
+>>>>>>> f1aa0fb4a19fd9742b08b9e877f4e910992c2e7b
 package controller;
 
 import Model.CartItem;
@@ -121,6 +129,17 @@ public class CartServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
+<<<<<<< HEAD
+    throws ServletException, IOException {
+String id = request.getParameter("roomId");
+   if(id != null){
+      orderOnliine(request, response);
+     
+   }else {
+      
+          orderForRoomBooking(request, response);
+   }
+=======
             throws ServletException, IOException {
         String roomId = request.getParameter("roomId");
         if (roomId != null) {
@@ -135,6 +154,7 @@ public class CartServlet extends HttpServlet {
             throws ServletException, IOException {
         // Redirect về menu nếu truy cập GET
         response.sendRedirect(request.getContextPath() + "/MenuServlet");
+>>>>>>> f1aa0fb4a19fd9742b08b9e877f4e910992c2e7b
     }
 
     @Override

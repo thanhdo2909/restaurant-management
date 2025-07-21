@@ -17,7 +17,7 @@ public class Favorite {
         this.userID = userID;
         this.foodID = foodID;
     }
-
+ 
     // Getters and setters
     public int getUserID() {
         return userID;

@@ -16,6 +16,8 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import java.util.List;
+import service.DAOOrderDetailService;
+import service.DAOOrderservice;
 
 /**
  *
@@ -23,35 +25,67 @@ import java.util.List;
  */
 @WebServlet(name="SubmitOrderServlet", urlPatterns={"/SubmitOrderServlet"})
 public class SubmitOrderServlet extends HttpServlet {
-   
-    /** 
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
+       private DAOOrderservice dao;
+       private DAOOrderDetailService daoOrderDetail;
+   @Override
+    public void init() {
+        dao = new DAOOrderservice();
+        daoOrderDetail = new DAOOrderDetailService ();
+    }
     public void orderOnline (HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-          HttpSession session = request.getSession();
-        List<CartItem> listCart = (List<CartItem>) session.getAttribute("cart");
-
-        // Kiểm tra giỏ hàng có rỗng không
-        if (listCart == null || listCart.isEmpty()) {
+         
+        HttpSession session = request.getSession();
+        List<CartItem> cart = (List<CartItem>) session.getAttribute("cart");
+        Account account = (Account) session.getAttribute("account");
+        
+        // Kiểm tra giỏ hàng và đăng nhập
+        if (cart == null || cart.isEmpty()) {
             response.sendRedirect(request.getContextPath() + "/CRUDproduct");
             return;
         }
-
-        // Kiểm tra người dùng có đăng nhập chưa
-        Account account = (Account) session.getAttribute("account");
+       
         if (account == null) {
-            response.sendRedirect(request.getContextPath() + "/login.jsp");
+            response.sendRedirect(request.getContextPath() + "/home/Login.jsp");
             return;
         }
-         
         
+        try {
+           
+            // Tính tổng tiền
+            double totalAmount = cart.stream()
+                .mapToDouble(item -> item.getPrice() * item.getQuantity())
+                .sum();
+            
+            // Tạo order
+            String total = String.valueOf(totalAmount);
+            String accountID = String.valueOf(account.getAccountID());
+            boolean orderId = dao.AddOrder(accountID, null, total, "Pending");
+           
+            // Thêm order details
+            for (CartItem item : cart) {
+                String foodId = String.valueOf(item.getFoodId());
+                String price = String.valueOf(item.getPrice());
+                String quantity = String.valueOf(item.getQuantity());
+              daoOrderDetail.addOrderDetail(foodId, quantity, price);
+            }
+            
+    
+            
+            // Xóa giỏ hàng sau khi đặt hàng thành công
+            session.removeAttribute("cart");
+            
+            // Chuyển hướng đến trang thành công
+            request.getRequestDispatcher("/home/Home.jsp").forward(request, response);
+            
+        } catch (Exception e) {
+                  e.printStackTrace();
+            request.setAttribute("errorMessage", "Đặt hàng thất bại: " + e.getMessage());
+            request.getRequestDispatcher("/home/OrderError.jsp").forward(request, response);  
+        }
+    }
 
-}
+
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
@@ -81,7 +115,7 @@ public class SubmitOrderServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-        processRequest(request, response);
+        orderOnline(request, response);
     } 
 
     /** 

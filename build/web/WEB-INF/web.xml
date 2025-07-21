@@ -17,6 +17,26 @@
         <servlet-name>FavoriteServlet</servlet-name>
         <url-pattern>/FavoriteServlet</url-pattern>
     </servlet-mapping>
+<<<<<<< HEAD
+<jsp-config>
+    <jsp-property-group>
+        <url-pattern>*.jsp</url-pattern>
+        <page-encoding>UTF-8</page-encoding>
+    </jsp-property-group>
+</jsp-config>
+<dependencies>
+    <dependency>
+        <groupId>com.google.zxing</groupId>
+        <artifactId>core</artifactId>
+        <version>3.5.2</version>
+    </dependency>
+    <dependency>
+        <groupId>com.google.zxing</groupId>
+        <artifactId>javase</artifactId>
+        <version>3.5.2</version>
+    </dependency>
+</dependencies>
+=======
     <servlet>
         <servlet-name>ajaxServlet</servlet-name>
         <servlet-class>com.vnpay.common.ajaxServlet</servlet-class>
@@ -42,4 +62,5 @@
         <url-pattern>/vnpayrefund/*</url-pattern>
     </servlet-mapping>
 
+>>>>>>> f1aa0fb4a19fd9742b08b9e877f4e910992c2e7b
 </web-app>

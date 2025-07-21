@@ -3,6 +3,28 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
+<<<<<<< HEAD
+            <file>file:/C:/Users/ACER/Documents/GitHub/restaurant-management/src/java/Model/Order.java</file>
+            <file>file:/C:/Users/ACER/Documents/GitHub/restaurant-management/src/java/RoomBooking/RoomBookingServlet.java</file>
+            <file>file:/C:/Users/ACER/Documents/GitHub/restaurant-management/src/java/DAO/IDAORoomBooking.java</file>
+            <file>file:/C:/Users/ACER/Documents/GitHub/restaurant-management/src/java/controller/shipper/ShipperOrderServlet.java</file>
+            <file>file:/C:/Users/ACER/Documents/GitHub/restaurant-management/src/java/Model/Room.java</file>
+            <file>file:/C:/Users/ACER/Documents/GitHub/restaurant-management/src/java/Model/RoomBooking.java</file>
+            <file>file:/C:/Users/ACER/Documents/GitHub/restaurant-management/src/java/DAO/DAORoomBooking.java</file>
+            <file>file:/C:/Users/ACER/Documents/GitHub/restaurant-management/src/java/Model/Promotion.java</file>
+            <file>file:/C:/Users/ACER/Documents/GitHub/restaurant-management/src/java/RoomBooking/AdminViewTableServlet.java</file>
+            <file>file:/C:/Users/ACER/Documents/GitHub/restaurant-management/src/java/DAO/DAOOrder.java</file>
+            <file>file:/C:/Users/ACER/Documents/GitHub/restaurant-management/src/java/DAO/IDAOOrder.java</file>
+            <file>file:/C:/Users/ACER/Documents/GitHub/restaurant-management/src/java/DAO/DAORoom.java</file>
+            <file>file:/C:/Users/ACER/Documents/GitHub/restaurant-management/src/java/service/DAOPromotionService.java</file>
+            <file>file:/C:/Users/ACER/Documents/GitHub/restaurant-management/src/java/DAO/DAOOrderDetail.java</file>
+            <file>file:/C:/Users/ACER/Documents/GitHub/restaurant-management/src/java/RoomBooking/GenerateQRCodeServlet.java</file>
+            <file>file:/C:/Users/ACER/Documents/GitHub/restaurant-management/src/java/service/DAORoomBookingService.java</file>
+            <file>file:/C:/Users/ACER/Documents/GitHub/restaurant-management/src/java/service/ShipperService.java</file>
+            <file>file:/C:/Users/ACER/Documents/GitHub/restaurant-management/src/java/service/KitchenService.java</file>
+            <file>file:/C:/Users/ACER/Documents/GitHub/restaurant-management/src/java/DAO/IDAORoom.java</file>
+            <file>file:/C:/Users/ACER/Documents/GitHub/restaurant-management/src/java/service/DAORoomService.java</file>
+=======
             <file>file:/C:/Users/ACER/Documents/restaurant-management/web/BookTable/ErrorPopup.jsp</file>
             <file>file:/C:/Users/ACER/Documents/restaurant-management/web/BookTable/CustomerViewBooking.jsp</file>
             <file>file:/C:/Users/ACER/Documents/restaurant-management/src/java/RoomBooking/CancelBookingServlet.java</file>
@@ -12,6 +34,7 @@
             <file>file:/C:/Users/ACER/Documents/restaurant-management/web/BookTable/BookTable.jsp</file>
             <file>file:/C:/Users/ACER/Documents/restaurant-management/web/BookTable/BookingSucces.jsp</file>
             <file>file:/C:/Users/ACER/Documents/restaurant-management/src/java/RoomBooking/AdminViewCancellationRequestsServlet.java</file>
+>>>>>>> f1aa0fb4a19fd9742b08b9e877f4e910992c2e7b
         </group>
     </open-files>
 </project-private>

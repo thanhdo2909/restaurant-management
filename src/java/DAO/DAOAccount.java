@@ -28,7 +28,8 @@ public class DAOAccount implements IDAOAccount {
     private static final String changePass = "UPDATE Accounts SET PasswordHash = ? WHERE AccountID = ?";
     private static final String changeAccount = "UPDATE Accounts SET Username = ? WHERE AccountID = ?";
     private static final String checkEmail = "SELECT * FROM Accounts WHERE Email = ?";
-
+    private static final String lockAccount = "UPDATE Accounts SET Status = 'locked' WHERE AccountID = ?";
+       private static final String unlockAccount = "UPDATE Accounts SET Status = 'action' WHERE AccountID = ?";
     @Override
     public ArrayList<Account> getAll() {
 
@@ -213,4 +214,34 @@ public class DAOAccount implements IDAOAccount {
         }
         return false;
     }
+
+   
+    @Override
+    public boolean lockAccount(String id) {
+            boolean success = false;
+    try (Connection conn = DBConnection.getConnection();
+         PreparedStatement ps = conn.prepareStatement(lockAccount)) {
+        
+        ps.setString(1, id);
+        success = ps.executeUpdate() > 0;
+        
+    } catch (Exception e) {
+        e.printStackTrace();
+    }
+    return success;
+    }
+
+    @Override
+    public boolean unlockAccount(String id) {
+         boolean success = false;
+    try (Connection conn = DBConnection.getConnection();
+         PreparedStatement ps = conn.prepareStatement(unlockAccount)) {
+        
+        ps.setString(1, id);
+        success = ps.executeUpdate() > 0;
+        
+    } catch (Exception e) {
+        e.printStackTrace();
+    }
+    return success;    }
 }

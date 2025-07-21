@@ -10,60 +10,29 @@
 %>
 <% if ("true".equals(session.getAttribute("justUploaded"))) { %>
 <script>
-    // Reload lại sau 500ms để đảm bảo ảnh đã ghi xong
     setTimeout(() => {
-        sessionStorage.setItem('imgRetry', 0); // reset để tránh lặp
+        sessionStorage.setItem('imgRetry', 0);
         window.location.reload();
     }, 50);
 </script>
 <%
-    session.removeAttribute("justUploaded"); // Xóa flag sau khi reload
+    session.removeAttribute("justUploaded");
 } %>
-<html>
+
+<!DOCTYPE html>
+<html lang="vi">
 <head>
+    <meta charset="UTF-8">
     <title>Trang cá nhân</title>
-<!--    <script>
-    const imgUrl = '../<%= user.getProfileImage() %>?v=' + Date.now();
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 
-    function checkImage(url) {
-        const img = new Image();
-        img.onload = function() {
-            console.log("Ảnh tồn tại.");
-        };
-        img.onerror = function() {
-            console.log("Ảnh chưa tồn tại, reload...");
-            window.location.reload();
-        };
-        img.src = url;
-    }
-
-    checkImage(imgUrl);
-</script>-->
     <style>
-        
-        body {
-            background-color: #f5f5f5;
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-        }
-
-        .profile-container {
-            width: 400px;
-            background-color: #fff;
-            margin: 50px auto;
-            padding: 20px;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-            border-radius: 10px;
-            text-align: center;
-        }
-
         .profile-image {
-            width: 150px;
-            height: 150px;
+            width: 160px;
+            height: 160px;
             border-radius: 50%;
             object-fit: cover;
-            border: 3px solid #4CAF50;
+            border: 4px solid #0d6efd;
             cursor: pointer;
             transition: transform 0.3s;
         }
@@ -72,36 +41,14 @@
             transform: scale(1.05);
         }
 
-        .profile-info {
-            text-align: left;
-            margin-top: 20px;
-        }
-
-        .profile-info div {
-            margin-bottom: 10px;
-        }
-
         #uploadForm {
             display: none;
-            margin-top: 20px;
-            text-align: left;
         }
 
-        #uploadForm input[type="file"] {
-            margin-bottom: 10px;
-        }
-
-        #uploadForm button {
-            background-color: #4CAF50;
-            color: white;
-            border: none;
-            padding: 8px 12px;
-            border-radius: 5px;
-            cursor: pointer;
-        }
-
-        #uploadForm button:hover {
-            background-color: #45a049;
+        @media (max-width: 768px) {
+            .text-md-start {
+                text-align: center !important;
+            }
         }
     </style>
 
@@ -112,36 +59,41 @@
         }
     </script>
 </head>
-<body>
+<body class="bg-light">
+ <%@ include file="../includes/Nappar.jsp" %>
+<div class="container my-5">
+    <div class="card shadow p-4">
+        <div class="row g-4 align-items-center">
+            <!-- Left: Avatar + upload -->
+            <div class="col-md-4 text-center">
+                <img src="<%= request.getContextPath() + "/" + user.getProfileImage().replace(" ", "%20") + "?v=" + System.currentTimeMillis() %>"
+                     alt="Ảnh đại diện"
+                     class="profile-image mb-3"
+                     onclick="toggleUpload()" />
 
-<div class="profile-container">
-    <h2>Thông tin cá nhân</h2>
+                <form id="uploadForm" action="${pageContext.request.contextPath}/ProfileServlet" method="post" enctype="multipart/form-data">
+                    <input type="file" name="profileImage" accept="image/*" class="form-control mb-2" required>
+                    <button type="submit" class="btn btn-primary btn-sm">Cập nhật ảnh</button>
+                </form>
+            </div>
 
-    <!-- Ảnh đại diện -->
-<img src="<%= request.getContextPath() + "/" + user.getProfileImage().replace(" ", "%20") + "?v=" + System.currentTimeMillis() %>"
-     alt="Ảnh đại diện"
-     class="profile-image"
-     onclick="toggleUpload()" />
+            <!-- Right: Info -->
+            <div class="col-md-8">
+                <h3 class="mb-3">Thông tin cá nhân</h3>
+                <div class="mb-2"><strong>Họ và tên:</strong> <%= user.getFullName() %></div>
+                <div class="mb-2"><strong>Email:</strong> <%= user.getEmail() %></div>
+                <div class="mb-2"><strong>Tài khoản:</strong> <%= user.getUsername() %></div>
+                <div class="mb-2"><strong>Trạng thái:</strong> <%= user.getStatus() %></div>
+                <div class="mb-2"><strong>Vai trò:</strong> <%= user.getRole() %></div>
+                <div class="mb-4"><strong>Cấp độ:</strong> <%= user.getTierID() %></div>
 
-
-    <!-- Form upload ảnh -->
-    <form id="uploadForm" action="${pageContext.request.contextPath}/ProfileServlet" method="post" enctype="multipart/form-data">
-        <label for="profileImage">Chọn ảnh mới:</label><br/>
-        <input type="file" name="profileImage" id="profileImage" accept="image/*" required /><br/>
-        <button type="submit">Cập nhật ảnh đại diện</button>
-    </form>
-
-    <div class="profile-info">
-        <div><b>Họ và tên:</b> <%= user.getFullName() %></div>
-        <div><b>Email:</b> <%= user.getEmail() %></div>
-        <div><b>Tên đăng nhập:</b> <%= user.getUsername() %></div>
-        <div><b>Trạng thái:</b> <%= user.getStatus() %></div>
-        <div><b>Vai trò:</b> <%= user.getRole() %></div>
-        <div><b>Cấp độ:</b> <%= user.getTierID() %></div>
+                <div class="d-flex gap-3 flex-wrap">
+                    <a href="${pageContext.request.contextPath}/home/Pass.jsp" class="btn btn-outline-primary btn-sm">Đổi mật khẩu</a>
+                    <a href="${pageContext.request.contextPath}/home/Account.jsp" class="btn btn-outline-secondary btn-sm">Đổi tài khoản</a>
+                </div>
+            </div>
+        </div>
     </div>
-    <a href="${pageContext.request.contextPath}/home/Pass.jsp"> đổi mật khẩu  </a>
-     <a href="${pageContext.request.contextPath}/home/Account.jsp"> đổi tài khoản  </a>
-   
 </div>
 
 </body>
