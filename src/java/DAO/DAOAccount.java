@@ -109,11 +109,10 @@ public class DAOAccount implements IDAOAccount {
 
             ps.setString(1, fullName);
             ps.setString(2, email);
-            ps.setDate(3, null);
+            ps.setNull(3, java.sql.Types.DATE);
             ps.setInt(4, 1);
             ps.setString(5, username);
-            ps.setString(6, (pass));
-
+            ps.setString(6, pass);
             ps.setString(7, fileName);
             ps.setString(8, role);
 

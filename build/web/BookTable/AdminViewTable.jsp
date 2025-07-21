@@ -591,6 +591,17 @@
             </div>
         </div>
 
+<<<<<<< HEAD
+=======
+        <!-- Nút Xem Hủy Bàn -->
+        <div style="text-align: right; margin-bottom: 20px;">
+            <a href="${pageContext.request.contextPath}/AdminViewCancellationRequestsServlet" class="btn btn-warning">
+                <i class="fas fa-times"></i>
+                Xem Hủy Bàn
+            </a>
+        </div>
+
+>>>>>>> f1aa0fb4a19fd9742b08b9e877f4e910992c2e7b
         <!-- Rooms Management Section -->
         <section class="management-section">
             <div class="section-header">

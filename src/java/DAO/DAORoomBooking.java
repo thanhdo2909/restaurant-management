@@ -269,4 +269,8 @@ public class DAORoomBooking {
         }
         return list;
     }
+<<<<<<< HEAD
 }
+=======
+}   
+>>>>>>> f1aa0fb4a19fd9742b08b9e877f4e910992c2e7b

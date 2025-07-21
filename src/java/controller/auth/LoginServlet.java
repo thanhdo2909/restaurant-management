@@ -45,21 +45,38 @@ public class LoginServlet extends HttpServlet {
     }
 
     private void handleLogin(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+<<<<<<< HEAD
         String username = request.getParameter("name");
         String pass = request.getParameter("pass");
         String password = MD5Hash(pass);
         String remember = request.getParameter("rememberMe");
 
         System.out.println("Attempting login for username: " + username + ", password hash: " + password);
+=======
+        String username = request.getParameter("username"); // Sửa từ "name" để khớp với Login.jsp
+        String pass = request.getParameter("password");    // Sửa từ "pass" để khớp với Login.jsp
+        String password = MD5Hash(pass);
+        String remember = request.getParameter("rememberMe");
+
+        System.out.println("Attempting login for username: " + username + ", password hash: " + password); // Debug
+>>>>>>> f1aa0fb4a19fd9742b08b9e877f4e910992c2e7b
         Account account = accountService.Login(username, password);
         
         if (account != null) {
             HttpSession session = request.getSession();
+<<<<<<< HEAD
             session.setAttribute("accountId", account.getAccountID());
             session.setAttribute("fullName", account.getFullName());
             session.setAttribute("account", account);
 
             System.out.println("Login successful. accountId: " + account.getAccountID() + ", fullName: " + account.getFullName());
+=======
+            session.setAttribute("accountId", account.getAccountID()); // Lưu ID tài khoản cho đặt bàn
+            session.setAttribute("fullName", account.getFullName());   // Lưu fullName cho BookTable.jsp
+            session.setAttribute("account", account);
+
+            System.out.println("Login successful. accountId: " + account.getAccountID() + ", fullName: " + account.getFullName()); // Debug
+>>>>>>> f1aa0fb4a19fd9742b08b9e877f4e910992c2e7b
 
             if ("on".equals(remember)) {
                 Cookie userCookie = new Cookie("name", username);
@@ -72,6 +89,7 @@ public class LoginServlet extends HttpServlet {
                 response.addCookie(new Cookie("name", ""));
                 response.addCookie(new Cookie("pass", ""));
             }
+<<<<<<< HEAD
 
             // Xử lý chuyển hướng theo role
             if ("User".equals(account.getRole())) {
@@ -85,6 +103,11 @@ public class LoginServlet extends HttpServlet {
             }
         } else {
             System.out.println("Login failed for username: " + username);
+=======
+            response.sendRedirect(request.getContextPath() + "/home/Home.jsp"); // Chuyển về trang chính
+        } else {
+            System.out.println("Login failed for username: " + username + ". Possible cause: Check DAOAccountService or database."); // Debug chi tiết
+>>>>>>> f1aa0fb4a19fd9742b08b9e877f4e910992c2e7b
             request.setAttribute("loginError", "Sai tên đăng nhập hoặc mật khẩu!");
             request.getRequestDispatcher("/home/Login.jsp").forward(request, response);
         }
@@ -103,14 +126,20 @@ public class LoginServlet extends HttpServlet {
             request.getRequestDispatcher("/home/Login.jsp").forward(request, response);
             return;
         }
+<<<<<<< HEAD
         
+=======
+>>>>>>> f1aa0fb4a19fd9742b08b9e877f4e910992c2e7b
         if (accountService.checkEmail(email)) {
             request.setAttribute("signupError", "Email đã tồn tại!");
             request.setAttribute("showSignup", true);
             request.getRequestDispatcher("/home/Login.jsp").forward(request, response);
             return;
         }
+<<<<<<< HEAD
         
+=======
+>>>>>>> f1aa0fb4a19fd9742b08b9e877f4e910992c2e7b
         if (accountService.isUsernameExist(username)) {
             request.setAttribute("signupError", "Tên đăng nhập đã tồn tại!");
             request.setAttribute("showSignup", true);
@@ -155,7 +184,11 @@ public class LoginServlet extends HttpServlet {
         session.setAttribute("signupPassword", password);
         session.setAttribute("signupfileName", fileName);
         session.setAttribute("signupOtp", otpCode);
+<<<<<<< HEAD
         session.setAttribute("signupOtpExpiry", System.currentTimeMillis() + 10 * 60 * 1000);
+=======
+        session.setAttribute("signupOtpExpiry", System.currentTimeMillis() + 10 * 60 * 1000); // 10 phút
+>>>>>>> f1aa0fb4a19fd9742b08b9e877f4e910992c2e7b
 
         session.setAttribute("purpose", "signup");
         response.sendRedirect("./includes/OTP.jsp");

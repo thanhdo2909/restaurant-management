@@ -20,6 +20,9 @@ public class DAOReviewService {
          public ArrayList<Review> getAll (String id){
              return daoReview.getAll(id);
          }
+         public boolean insertReview (String FoodId, String AccountId, String Comment, String Rating, String CreatedAt){
+             return daoReview.insertReview(FoodId, AccountId, Comment, Rating, CreatedAt);
+         }
       public static void main(String[] args) {
         DAOReviewService d = new DAOReviewService();
         ArrayList<Review> a = d.getAll("1");

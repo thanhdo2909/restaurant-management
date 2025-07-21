@@ -17,6 +17,7 @@
         <servlet-name>FavoriteServlet</servlet-name>
         <url-pattern>/FavoriteServlet</url-pattern>
     </servlet-mapping>
+<<<<<<< HEAD
 <jsp-config>
     <jsp-property-group>
         <url-pattern>*.jsp</url-pattern>
@@ -35,4 +36,31 @@
         <version>3.5.2</version>
     </dependency>
 </dependencies>
+=======
+    <servlet>
+        <servlet-name>ajaxServlet</servlet-name>
+        <servlet-class>com.vnpay.common.ajaxServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>vnpayQuery</servlet-name>
+        <servlet-class>com.vnpay.common.vnpayQuery</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>vnpayRefund</servlet-name>
+        <servlet-class>com.vnpay.common.vnpayRefund</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>ajaxServlet</servlet-name>
+        <url-pattern>/vnpayajax/*</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>vnpayQuery</servlet-name>
+        <url-pattern>/vnpayquery/*</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>vnpayRefund</servlet-name>
+        <url-pattern>/vnpayrefund/*</url-pattern>
+    </servlet-mapping>
+
+>>>>>>> f1aa0fb4a19fd9742b08b9e877f4e910992c2e7b
 </web-app>

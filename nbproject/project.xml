@@ -15,6 +15,10 @@
                     <path-in-war>WEB-INF/lib</path-in-war>
                 </library>
                 <library dirs="200">
+                    <file>${file.reference.gson-2.3.1.jar}</file>
+                    <path-in-war>WEB-INF/lib</path-in-war>
+                </library>
+                <library dirs="200">
                     <file>${file.reference.gson-2.8.2.jar}</file>
                     <path-in-war>WEB-INF/lib</path-in-war>
                 </library>
@@ -43,14 +47,18 @@
                     <path-in-war>WEB-INF/lib</path-in-war>
                 </library>
                 <library dirs="200">
+<<<<<<< HEAD
                     <file>${file.reference.mssql-jdbc-12.10.1.jre11.jar}</file>
                     <path-in-war>WEB-INF/lib</path-in-war>
                 </library>
                 <library dirs="200">
+=======
+>>>>>>> f1aa0fb4a19fd9742b08b9e877f4e910992c2e7b
                     <file>${file.reference.sqljdbc42.jar}</file>
                     <path-in-war>WEB-INF/lib</path-in-war>
                 </library>
                 <library dirs="200">
+<<<<<<< HEAD
                     <file>${file.reference.poi-5.4.1.jar}</file>
                     <path-in-war>WEB-INF/lib</path-in-war>
                 </library>
@@ -60,14 +68,20 @@
                 </library>
                 <library dirs="200">
                     <file>${file.reference.poi-ooxml-5.4.1.jar}</file>
+=======
+                    <file>${file.reference.javase-3.5.2.jar}</file>
+>>>>>>> f1aa0fb4a19fd9742b08b9e877f4e910992c2e7b
                     <path-in-war>WEB-INF/lib</path-in-war>
                 </library>
                 <library dirs="200">
                     <file>${file.reference.core-3.5.2.jar}</file>
+<<<<<<< HEAD
                     <path-in-war>WEB-INF/lib</path-in-war>
                 </library>
                 <library dirs="200">
                     <file>${file.reference.javase-3.5.2.jar}</file>
+=======
+>>>>>>> f1aa0fb4a19fd9742b08b9e877f4e910992c2e7b
                     <path-in-war>WEB-INF/lib</path-in-war>
                 </library>
             </web-module-libraries>
